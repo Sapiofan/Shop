@@ -153,9 +153,9 @@
                         <button type="button" onclick="cartChanges('/addToCart/${product.id}')" class="add-to-cart">Add to cart</button>
                 </sec:authorize>
                 <sec:authorize access="isAnonymous()">
-                    <form action="/checkout" method="post">
+                    <a href="/checkout/${product.id}">
                         <button class="add-to-cart">Buy</button>
-                    </form>
+                    </a>
                 </sec:authorize>
                 <div class="like-container">
                     <button type="button" class="empty-heart" onclick="productChanges('/addProduct/${product.id}')">
