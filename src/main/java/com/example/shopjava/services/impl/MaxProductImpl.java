@@ -1,9 +1,9 @@
-package com.example.shopjava.repos.impl;
+package com.example.shopjava.services.impl;
 
 import com.example.shopjava.entities.product.Laptop;
 import com.example.shopjava.entities.product.Phone;
 import com.example.shopjava.entities.product.Watch;
-import com.example.shopjava.repos.Utils;
+import com.example.shopjava.services.FindMaxProduct;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
@@ -11,7 +11,7 @@ import java.util.Comparator;
 import java.util.List;
 
 @Service
-public class UtilsImpl implements Utils {
+public class MaxProductImpl implements FindMaxProduct {
     @Override
     public Phone min(List<Phone> phoneList) {
         if (!phoneList.isEmpty())

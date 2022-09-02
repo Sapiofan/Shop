@@ -329,7 +329,7 @@ public class AdminController {
                                  @RequestParam("price") String stringPrice,
                                  @RequestParam("payment") String payment,
                                  @RequestParam("warranty") Integer warranty,
-                                 @RequestParam("available") Boolean available,
+                                 @RequestParam(value = "available", required = false) boolean available,
                                  @RequestParam(value = "gifts", required = false) String gifts,
                                  @RequestParam(value = "discount", required = false) int discount,
                                  @RequestParam("link") String link

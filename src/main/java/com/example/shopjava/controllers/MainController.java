@@ -5,11 +5,9 @@ import com.example.shopjava.entities.another.Career;
 import com.example.shopjava.entities.another.FAQ;
 import com.example.shopjava.entities.product.*;
 import com.example.shopjava.entities.user.Transaction;
-import com.example.shopjava.entities.user.cart.CartProduct;
 import com.example.shopjava.entities.contacts.Contact;
-import com.example.shopjava.entities.user.Favorite;
 import com.example.shopjava.entities.user.User;
-import com.example.shopjava.repos.Utils;
+import com.example.shopjava.services.FindMaxProduct;
 import com.example.shopjava.services.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -65,7 +63,7 @@ public class MainController {
     private WatchService watchService;
 
     @Autowired
-    private Utils utils;
+    private FindMaxProduct utils;
 
     private static final Logger log = LoggerFactory.getLogger(MainController.class);
 
