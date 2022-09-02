@@ -16,8 +16,7 @@ import static org.mockito.Mockito.verify;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.model;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @SpringBootTest
 @AutoConfigureMockMvc
@@ -49,6 +48,7 @@ public class MainControllerTests {
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(model().attribute("products", hasSize(0)))
+                .andExpect(view().name("filters"))
                 .andReturn();
     }
 
@@ -56,7 +56,8 @@ public class MainControllerTests {
     public void getPhonesPageTest() throws Exception {
         this.mvc.perform(get("/phones"))
                 .andDo(print())
-                .andExpect(status().isOk());
+                .andExpect(status().isOk())
+                .andExpect(view().name("filters"));
     }
 
     @Test
@@ -75,6 +76,7 @@ public class MainControllerTests {
                         .param("sort", "From expensive to cheap"))
                 .andDo(print())
                 .andExpect(status().isOk())
+                .andExpect(view().name("filters"))
                 .andExpect(model().attribute("products", hasSize(0)));
     }
 
@@ -82,41 +84,47 @@ public class MainControllerTests {
     public void getLaptopsPageTest() throws Exception {
         this.mvc.perform(get("/laptops"))
                 .andDo(print())
-                .andExpect(status().isOk());
+                .andExpect(status().isOk())
+                .andExpect(view().name("filters"));
     }
 
     @Test
     public void getWatchPageTest() throws Exception {
         this.mvc.perform(get("/watches"))
                 .andDo(print())
-                .andExpect(status().isOk());
+                .andExpect(status().isOk())
+                .andExpect(view().name("filters"));
     }
 
     @Test
     public void getDiscountPageTest() throws Exception {
         this.mvc.perform(get("/discounts"))
                 .andDo(print())
-                .andExpect(status().isOk());
+                .andExpect(status().isOk())
+                .andExpect(view().name("filters"));
     }
 
     @Test
     public void getBestsellersPageTest() throws Exception {
         this.mvc.perform(get("/bestsellers"))
                 .andDo(print())
-                .andExpect(status().isOk());
+                .andExpect(status().isOk())
+                .andExpect(view().name("filters"));
     }
 
     @Test
     public void loadContactPageTest() throws Exception {
         this.mvc.perform(get("/contact"))
                 .andDo(print())
-                .andExpect(status().isOk());
+                .andExpect(status().isOk())
+                .andExpect(view().name("contact"));
     }
 
     @Test
     public void loadHelpPageTest() throws Exception {
         this.mvc.perform(get("/help"))
                 .andDo(print())
-                .andExpect(status().isOk());
+                .andExpect(status().isOk())
+                .andExpect(view().name("help"));
     }
 }
