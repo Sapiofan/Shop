@@ -19,7 +19,7 @@ public class CareerServiceImpl implements CareerService {
     @Autowired
     private CareerRepo careerRepository;
 
-    private static final Logger log = LoggerFactory.getLogger("log");
+    private static final Logger log = LoggerFactory.getLogger(CareerServiceImpl.class);
 
     @Override
     @Transactional
@@ -29,15 +29,14 @@ public class CareerServiceImpl implements CareerService {
             return "Sorry, but user with such email has already send request for job";
         }
         careerRepository.save(career);
+
         return "Your request for job was successfully sent. Expect an email in 2-3 days";
     }
 
     @Override
     @Transactional
     public Page<Career> getCareers(int pageNum) {
-        int pageSize = 4;
-        Pageable pageable = PageRequest.of(pageNum - 1, pageSize);
-        return careerRepository.findAll(pageable);
+        return careerRepository.findAll(PageRequest.of(pageNum - 1, 4));
     }
 
     @Override

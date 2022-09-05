@@ -34,7 +34,7 @@
     <form action="/${fn:toLowerCase(category)}" method="post" class="filters-blocks">
         <h1>${category}</h1>
         <article>
-            <c:if test="${seacrhBool}">
+            <c:if test="${hasAsideMenu}">
                 <div class="aside" id="filters">
                     <h2 class="search-header">See also products by categories</h2>
                     <div class="aside-links">
@@ -76,7 +76,7 @@
                     </div>
                 </div>
             </c:if>
-            <c:if test="${!seacrhBool}">
+            <c:if test="${!hasAsideMenu}">
                 <div class="aside" id="filters">
                     <div class="head-filters">
                         <p>Filters</p>

@@ -9,15 +9,17 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>com.example</groupId>
-    <artifactId>Shop-Java</artifactId>
+    <artifactId>shop-java</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>Shop-Java</name>
+    <name>shop-java</name>
     <description>Shop-Java</description>
     <properties>
         <java.version>11</java.version>
         <repackage.classifier/>
         <spring-native.version>0.11.2</spring-native.version>
         <spring.version>5.0.8.RELEASE</spring.version>
+        <start-class>com.example.shopjava.ShopJavaApplication</start-class>
+        <cucumber.version>6.8.0</cucumber.version>
     </properties>
     <dependencies>
         <dependency>
@@ -59,6 +61,12 @@
         <dependency>
             <groupId>org.apache.tomcat</groupId>
             <artifactId>tomcat-jsp-api</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>javax.servlet</groupId>
+            <artifactId>servlet-api</artifactId>
+            <version>2.5</version>
+            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>javax.servlet</groupId>
@@ -117,6 +125,24 @@
 <!--            <artifactId>spring-boot-starter-freemarker</artifactId>-->
 <!--            <version>2.3.4.RELEASE</version>-->
 <!--        </dependency>-->
+        <dependency>
+            <groupId>io.cucumber</groupId>
+            <artifactId>cucumber-java</artifactId>
+            <version>${cucumber.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>io.cucumber</groupId>
+            <artifactId>cucumber-junit</artifactId>
+            <version>${cucumber.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>io.cucumber</groupId>
+            <artifactId>cucumber-spring</artifactId>
+            <version>${cucumber.version}</version>
+            <scope>test</scope>
+        </dependency>
     </dependencies>
 
     <build>
@@ -125,14 +151,16 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <configuration>
-                    <classifier>${repackage.classifier}</classifier>
-                    <image>
-                        <builder>paketobuildpacks/builder:tiny</builder>
-                        <env>
-                            <BP_NATIVE_IMAGE>true</BP_NATIVE_IMAGE>
-                        </env>
-                    </image>
+                    <fork>true</fork>
+                    <mainClass>${start-class}</mainClass>
                 </configuration>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>repackage</goal>
+                        </goals>
+                    </execution>
+                </executions>
             </plugin>
             <plugin>
                 <groupId>org.springframework.experimental</groupId>

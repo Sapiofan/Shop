@@ -2,7 +2,11 @@ package com.example.shopjava.controllers;
 
 import com.example.shopjava.controllers.MainController;
 import com.example.shopjava.entities.user.cart.CartProduct;
+import io.cucumber.junit.Cucumber;
+import io.cucumber.junit.CucumberOptions;
+import io.cucumber.spring.CucumberContextConfiguration;
 import org.junit.jupiter.api.*;
+import org.junit.runner.RunWith;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,22 +34,27 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @AutoConfigureMockMvc
 @WithMockUser(username = "somemail@gmail.com", password = "somePassword")
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
+//@CucumberContextConfiguration
+//@CucumberOptions(features = "classpath: cucumber", glue = "com.example.shopjava.controllers")
+//@RunWith(Cucumber.class)
 public class CommandsTests {
 
     @Autowired
     private MockMvc mvc;
+
+    static MvcResult mvcResult;
 
     @Test
     @Order(1)
     public void addFavoriteTest() throws Exception {
         MediaType mediaType = new MediaType(MediaType.APPLICATION_JSON.getType(),
                 MediaType.APPLICATION_JSON.getSubtype());
-        this.mvc.perform(get("/addProduct/1"))
+        mvcResult = this.mvc.perform(get("/addProduct/1"))
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(authenticated())
                 .andExpect(content().contentType(mediaType))
-                .andExpect(jsonPath("$", hasSize(1)));
+                .andExpect(jsonPath("$", hasSize(1))).andReturn();
     }
 
     @Test

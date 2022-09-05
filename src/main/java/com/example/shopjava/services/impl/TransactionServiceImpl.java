@@ -20,10 +20,13 @@ public class TransactionServiceImpl implements TransactionService {
 
     @Override
     @Transactional
-    public Transaction addNewTransaction(String name, String phone, String email, String city, String card, String date, String cvv, Integer total) {
+    public Transaction addNewTransaction(String name, String phone, String email, String city,
+                                         String card, String date, String cvv, Integer total) {
+
         Transaction transaction = new Transaction(total, "Privat24", email, phone, city, name);
         transactionRepository.save(transaction);
         log.info("Transaction was successful: " + transaction.getId());
+
         return transaction;
     }
 }

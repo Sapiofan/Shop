@@ -40,21 +40,24 @@ public class ReviewServiceImpl implements ReviewService {
     @Override
     @Transactional
     public Page<Review> getAll(int pageNum) {
-        Pageable pageable = PageRequest.of(pageNum - 1, 5, Sort.by("date").descending());
-        return reviewRepository.findAll(pageable);
+        return reviewRepository.findAll(PageRequest.of(pageNum - 1, 5, Sort.by("date").descending()));
     }
 
     @Override
     @Transactional
-    public boolean addReview(Integer rating, String text, Boolean isRecommended, Authentication authentication, Long productId) {
+    public boolean addReview(Integer rating, String text, Boolean isRecommended,
+                             Authentication authentication, Long productId) {
+
         User user = userRepository.findByEmail(authentication.getName());
         List<Review> reviews = reviewRepository.findByUser(user.getId());
+
         for (Review review : reviews) {
             if (review.getProduct().getId().equals(productId)) {
                 log.warn("Such review has already exist for this product: " + review.getId());
                 return true;
             }
         }
+
         Review review = new Review();
         review.setReview(text);
         review.setDate(Date.from(Instant.now()));
@@ -63,6 +66,7 @@ public class ReviewServiceImpl implements ReviewService {
         review.setRecommended(isRecommended);
         review.setUser(user);
         reviewRepository.save(review);
+
         return false;
     }
 
@@ -71,6 +75,7 @@ public class ReviewServiceImpl implements ReviewService {
     public List<Review> findReviewsByProduct(Long productId) {
         List<Review> reviews = reviewRepository.findReviewsByProduct(productId);
         reviews.sort(Comparator.comparingLong(o -> o.getDate().getTime()));
+
         return reviews;
     }
 
@@ -91,19 +96,23 @@ public class ReviewServiceImpl implements ReviewService {
     public Integer calculateRecommended(List<Review> reviews) {
         int count = 0;
         for (Review review : reviews) {
-            if (review.getRecommended())
+            if (review.getRecommended()) {
                 count++;
+            }
         }
-        if (count == 0)
+        if (count == 0) {
             return 0;
+        }
+
         Product product = reviews.get(0).getProduct();
         float counter = 0;
         for (Review review : reviews) {
             counter += review.getRating();
         }
-        float res = counter / reviews.size();
-        product.setRating(res);
+
+        product.setRating(counter / reviews.size());
         productRepository.save(product);
+
         return count * 100 / reviews.size();
     }
 }

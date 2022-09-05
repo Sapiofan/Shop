@@ -23,14 +23,15 @@ public class FilterProductsRepoImpl implements FilterProductsRepo {
     @Override
     public List<Phone> filterPhones(Set<String> filters, Map<String, List<String>> fullFilters, Integer min, Integer max) {
         String query = generateQuery("Phone", filters, fullFilters, min, max);
-        log.info(query);
+        log.debug(query);
+
         return entityManager.createQuery(query).getResultList();
     }
 
     @Override
     public List<Laptop> filterLaptops(Set<String> filters, Map<String, List<String>> fullFilters, Integer min, Integer max) {
         String query = generateQuery("Laptop", filters, fullFilters, min, max);
-        log.info(query);
+        log.debug(query);
 
         return entityManager.createQuery(query).getResultList();
     }
@@ -38,14 +39,15 @@ public class FilterProductsRepoImpl implements FilterProductsRepo {
     @Override
     public List<Watch> filterWatches(Set<String> filters, Map<String, List<String>> fullFilters, Integer min, Integer max) {
         String query = generateQuery("Watch", filters, fullFilters, min, max);
-        log.info(query);
+        log.debug(query);
 
         return entityManager.createQuery(query).getResultList();
     }
 
     private String generateQuery(String table, Set<String> filters, Map<String, List<String>> fullFilters,
                                  Integer min, Integer max) {
-        String temp, init, query = init = temp = "select p from " + table + " p where (p.price between " + min + " and " + max + ") and (";
+        String temp, init, query = init = temp = "select p from " + table +
+                " p where (p.price between " + min + " and " + max + ") and (";
         if (filters != null) {
             Map<String, Boolean> checkedFilters = new HashMap<>();
             for (String filter : filters) {
@@ -108,6 +110,7 @@ public class FilterProductsRepoImpl implements FilterProductsRepo {
             String[] arr2 = Arrays.copyOfRange(arr1, 0, arr1.length - 2);
             query = String.join(" ", arr2);
         }
+
         return query;
     }
 }

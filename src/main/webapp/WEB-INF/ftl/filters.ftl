@@ -38,7 +38,7 @@
     <form action="/${category?lower_case}" method="post" class="filters-blocks">
         <h1>${category}</h1>
         <article>
-            <#if seacrhBool??>
+            <#if hasAsideMenu??>
                 <div class="aside" id="filters">
                     <h2 class="search-header">See also products by categories</h2>
                     <div class="aside-links">
@@ -80,7 +80,7 @@
                     </div>
                 </div>
             </#if>
-            <#if !seacrhBool??>
+            <#if !hasAsideMenu??>
                 <div class="aside" id="filters">
                     <div class="head-filters">
                         <p>Filters</p>

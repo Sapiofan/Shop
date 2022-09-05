@@ -26,6 +26,7 @@ public class FavoriteServiceImpl implements FavoriteService {
     public Favorite addProduct(Favorite favorite, Long productId) {
         favorite.getFavoriteProducts().add(productRepository.findProductById(productId));
         favoriteRepository.save(favorite);
+
         return favorite;
     }
 
@@ -38,9 +39,9 @@ public class FavoriteServiceImpl implements FavoriteService {
     @Override
     @Transactional
     public Favorite deleteProduct(Favorite favorite, Long productId) {
-        Set<Product> favorites = favorite.getFavoriteProducts();
-        favorites.removeIf(product -> productId.equals(product.getId()));
+        favorite.getFavoriteProducts().removeIf(product -> productId.equals(product.getId()));
         favoriteRepository.save(favorite);
+
         return favorite;
     }
 
@@ -49,6 +50,7 @@ public class FavoriteServiceImpl implements FavoriteService {
     public Favorite cleanFavorites(Favorite favorite) {
         favorite.setFavoriteProducts(new HashSet<>());
         favoriteRepository.save(favorite);
+
         return favorite;
     }
 }

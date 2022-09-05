@@ -42,15 +42,18 @@ public class CustomUserDetailsService implements UserDetailsService {
             log.error("User with such email wasn't found: " + email);
             throw new UsernameNotFoundException("User not found");
         }
+
         return new CustomUserDetails(user);
     }
 
     public String signUp(String email, String password, String repeatPSW, HttpServletRequest request) {
         User user = userRepository.findByEmail(email);
+
         if (user != null) {
             log.warn("User with such email already exists" + email);
             return "User with such email already exists";
         }
+
         user = new User();
         user.setEmail(email);
         if (!password.equals(repeatPSW)) {
@@ -61,15 +64,18 @@ public class CustomUserDetailsService implements UserDetailsService {
         user.setPassword(encodedPassword);
         user.setRole(Role.USER);
         addUserCartAndFavorites(user);
+
         return "";
     }
 
     public String signIn(String email, String password, HttpServletRequest request) {
         User user = userRepository.findByEmail(email);
+
         if (user == null) {
             log.warn("Wrong email was inputted: " + email);
             return "Email was wrong";
         }
+
         BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
         if (!passwordEncoder.matches(password, user.getPassword())) {
             return "Password was wrong";
@@ -82,6 +88,7 @@ public class CustomUserDetailsService implements UserDetailsService {
         sc.setAuthentication(auth);
         HttpSession session = request.getSession(true);
         session.setAttribute(SPRING_SECURITY_CONTEXT_KEY, sc);
+
         return "";
     }
 
@@ -92,10 +99,12 @@ public class CustomUserDetailsService implements UserDetailsService {
     @PostConstruct
     public void createDefaultAdmin() {
         User user = userRepository.findByEmail("somemail@gmail.com");
+
         if (user != null) {
             log.info("Admin has already exists");
             return;
         }
+
         user = new User();
         user.setEmail("somemail@gmail.com");
         BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();

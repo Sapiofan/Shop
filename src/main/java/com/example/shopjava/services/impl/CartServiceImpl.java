@@ -28,12 +28,13 @@ public class CartServiceImpl implements CartService {
     @Transactional
     public Cart addProduct(Cart cart, Long productId) {
         Product product = productRepository.findProductById(productId);
-        if(cartProductRepo.findCartProduct(productId, cart.getId()) == null){
-            CartProduct cartProduct = new CartProduct(cart, product, 1, product.getPrice());
-            cartProductRepo.save(cartProduct);
-            cart.setTotalPrice(cart.getTotalPrice()+product.getPrice());
+        if (cartProductRepo.findCartProduct(productId, cart.getId()) == null) {
+            cartProductRepo.save(new CartProduct(cart, product, 1, product.getPrice()));
+            cart.setTotalPrice(cart.getTotalPrice() + product.getPrice());
+
             return cartRepository.save(cart);
         }
+
         return cart;
     }
 
@@ -44,7 +45,7 @@ public class CartServiceImpl implements CartService {
         Integer productPrice = cartProduct.getTotal() / cartProduct.getQuantity();
         cartProduct.setTotal(cartProduct.getTotal() + productPrice);
         cartProduct.setQuantity(cartProduct.getQuantity() + 1);
-        cart.setTotalPrice(cart.getTotalPrice()+productPrice);
+        cart.setTotalPrice(cart.getTotalPrice() + productPrice);
         cartRepository.save(cart);
         cartProductRepo.save(cartProduct);
     }
@@ -53,11 +54,11 @@ public class CartServiceImpl implements CartService {
     @Transactional
     public void decreaseQuantity(Long productId, Cart cart) {
         CartProduct cartProduct = cartProductRepo.findCartProduct(productId, cart.getId());
-        if(cartProduct.getQuantity() > 1){
+        if (cartProduct.getQuantity() > 1) {
             Integer productPrice = cartProduct.getTotal() / cartProduct.getQuantity();
             cartProduct.setTotal(cartProduct.getTotal() - productPrice);
             cartProduct.setQuantity(cartProduct.getQuantity() - 1);
-            cart.setTotalPrice(cart.getTotalPrice()-productPrice);
+            cart.setTotalPrice(cart.getTotalPrice() - productPrice);
             cartRepository.save(cart);
         }
         cartProductRepo.save(cartProduct);

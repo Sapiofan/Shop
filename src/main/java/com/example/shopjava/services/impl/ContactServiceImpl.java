@@ -20,6 +20,7 @@ public class ContactServiceImpl implements ContactService {
 
     @Autowired
     private ContactRepo contactRepository;
+
     @Autowired
     private MessageRepo messageRepository;
 
@@ -30,6 +31,7 @@ public class ContactServiceImpl implements ContactService {
     public String addContactMessage(Contact contact, String subject, String message) {
         Contact ContactInDb = contactRepository.findByEmail(contact.getEmail());
         Message message1 = new Message(subject, message);
+
         if (ContactInDb != null) {
             message1.setContact(ContactInDb);
             messageRepository.save(message1);
@@ -41,6 +43,7 @@ public class ContactServiceImpl implements ContactService {
             contactRepository.save(contact);
             log.warn("The contact doesn't exists. The Contact was created and the message was added.");
         }
+
         return "Message was successfully sent. We will answer during the week.";
     }
 
@@ -56,15 +59,14 @@ public class ContactServiceImpl implements ContactService {
             contact.setSendMails(true);
         }
         contactRepository.save(contact);
+
         return "From now you will get emails about special and beneficial offers.";
     }
 
     @Override
     @Transactional
     public Page<Message> contacts(int pageNum) {
-        int pageSize = 5;
-        Pageable pageable = PageRequest.of(pageNum - 1, pageSize);
-        return messageRepository.findAll(pageable);
+        return messageRepository.findAll(PageRequest.of(pageNum - 1, 5));
     }
 
     @Override
@@ -75,8 +77,9 @@ public class ContactServiceImpl implements ContactService {
         contact.getMessages().remove(message);
         log.warn("Message was deleted: " + message);
         messageRepository.deleteById(id);
-        if(contact.getMessages().isEmpty())
+        if (contact.getMessages().isEmpty()) {
             contactRepository.deleteById(contact.getId());
+        }
         contactRepository.save(contact);
     }
 

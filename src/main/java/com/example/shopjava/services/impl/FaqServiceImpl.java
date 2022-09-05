@@ -28,6 +28,7 @@ public class FaqServiceImpl implements FaqService {
             return "Such question has already added";
         }
         faqRepository.save(faq);
+
         return "Question was added";
     }
 
@@ -40,8 +41,10 @@ public class FaqServiceImpl implements FaqService {
             dbFaq.setAnswer(answer);
             faqRepository.save(dbFaq);
             log.warn("FAQ was edited: " + dbFaq.getId());
+
             return "Was successfully edited";
         }
+
         return "Something went wrong. Such faq doesn't exist.";
     }
 

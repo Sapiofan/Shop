@@ -38,6 +38,7 @@ public class FilterProductsImpl implements FilterProducts {
         if (keyword != null) {
             return productRepository.searchProducts(keyword);
         }
+
         return phoneRepository.findAll();
     }
 
@@ -66,6 +67,7 @@ public class FilterProductsImpl implements FilterProducts {
             filters.initWatchChars();
             return filters.descriptionTableWatch;
         }
+
         return null;
     }
 
@@ -83,14 +85,14 @@ public class FilterProductsImpl implements FilterProducts {
             case "By name":
                 return sortByName(products);
         }
+
         return null;
     }
 
     @Override
     @Transactional
     public Page<Product> getAllProducts(int pageNum) {
-        Pageable pageable = PageRequest.of(pageNum - 1, 10, Sort.by("name").ascending());
-        return productRepository.findAll(pageable);
+        return productRepository.findAll(PageRequest.of(pageNum - 1, 10, Sort.by("name").ascending()));
     }
 
     @Override
@@ -125,8 +127,11 @@ public class FilterProductsImpl implements FilterProducts {
     @Override
     @Transactional
     public List<Product> bestsellers() {
-        List<Product> products = productRepository.findAll();
-        return products.stream().sorted(Comparator.comparingInt(Product::getSold)).limit(40).collect(Collectors.toList());
+        return productRepository.findAll()
+                .stream()
+                .sorted(Comparator.comparingInt(Product::getSold))
+                .limit(40)
+                .collect(Collectors.toList());
     }
 
     @Override
@@ -177,6 +182,7 @@ public class FilterProductsImpl implements FilterProducts {
             data.put("Color", watch.getColor());
             data.put("Working hours", watch.getWorking_hours());
         }
+
         return data;
     }
 

@@ -26,6 +26,18 @@ import java.util.stream.Collectors;
 @Controller
 public class MainController {
 
+    public static final String PRODUCTS = "products";
+    public static final String SEARCH_KEY = "searchKey";
+    public static final String HAS_ASIDE_MENU = "hasAsideMenu";
+    public static final String IS_AUTHENTICATED = "isAuthenticated";
+    public static final String MAX = "max";
+    public static final String PHONES = "Phones";
+    public static final String LAPTOPS = "Laptops";
+    public static final String FILTERS_PAGE = "filters";
+    public static final String PRODUCT = "product";
+    public static final String CATEGORY = "category";
+    public static final String RESULT = "result";
+    public static final String SORT_TYPE = "sortType";
     @Autowired
     private FilterProducts filterProducts;
 
@@ -40,9 +52,6 @@ public class MainController {
 
     @Autowired
     private CustomUserDetailsService userDetailsService;
-
-    @Autowired
-    private FavoriteService favoriteService;
 
     @Autowired
     private ReviewService reviewService;
@@ -84,13 +93,14 @@ public class MainController {
                                @RequestParam("psw") String psw,
                                @RequestParam("psw-repeat") String pswRepeat,
                                HttpServletRequest request,
-                               Model model
-    ) {
+                               Model model) {
+
         String result = userDetailsService.signUp(email, psw, pswRepeat, request);
         if (!result.isEmpty()) {
             model.addAttribute("error", result);
             return getHomePage(model, null);
         }
+
         return login(email, psw, request, model);
     }
 
@@ -98,52 +108,60 @@ public class MainController {
     public String login(@RequestParam("email") String email,
                         @RequestParam("psw") String psw,
                         HttpServletRequest request,
-                        Model model
-    ) {
+                        Model model) {
+
         String res = userDetailsService.signIn(email, psw, request);
         SecurityContext securityContext = SecurityContextHolder.getContext();
-        if(!res.isEmpty()){
+        if (!res.isEmpty()) {
             getUserPreferences(model, SecurityContextHolder.getContext().getAuthentication());
         }
+
         model.addAttribute("error", res);
+
         return getHomePage(model, securityContext.getAuthentication());
     }
 
     @PostMapping(value = "/", params = "logout")
     public String logout(Model model) {
         SecurityContextHolder.getContext().setAuthentication(null);
+
         return getHomePage(model, null);
     }
 
     @GetMapping("/searching")
     public String filtersPage(Model model, @RequestParam("search") String searchKey, Authentication authentication) {
-        if (utils.checkAuth(authentication))
-            model.addAttribute("isAuthenticated", true);
-        getUserPreferences(model, authentication);
-        List<? extends Product> products = filterProducts.searchProducts(searchKey);
-        model.addAttribute("products", products);
-        model.addAttribute("searchKey", searchKey);
+        if (utils.checkAuth(authentication)) {
+            model.addAttribute(IS_AUTHENTICATED, true);
+        }
 
-        model.addAttribute("seacrhBool", true);
-        return "filters";
+        getUserPreferences(model, authentication);
+
+        model.addAttribute(PRODUCTS, filterProducts.searchProducts(searchKey));
+        model.addAttribute(SEARCH_KEY, searchKey);
+        model.addAttribute(HAS_ASIDE_MENU, true);
+
+        return FILTERS_PAGE;
     }
 
     @GetMapping("/phones")
     public String phoneFilters(Model model, Authentication authentication) {
         getUserPreferences(model, authentication);
+
         List<Phone> phones = phoneService.getAllPhones();
         Map<String, List<String>> phoneFilters = phoneService.getPhoneCharacteristics();
-        Set<String> keys = phoneFilters.keySet();
-        LinkedHashSet<String> filters = new LinkedHashSet<>();
-        int max = 0;
-        Phone phone = utils.max(phoneService.getAllPhones());
-        if(phone != null)
-            max = utils.max(phones).getPrice();
 
-        filterPostModel(model, "Phones", phoneFilters, keys, filters, 0, max, "From expensive to cheap");
-        model.addAttribute("products", phones);
-        model.addAttribute("max", max);
-        return "filters";
+        int max = 0;
+        Phone phoneWithMaxPrice = utils.max(phoneService.getAllPhones());
+        if (phoneWithMaxPrice != null) {
+            max = utils.max(phones).getPrice();
+        }
+
+        filterPostModel(model, PHONES, phoneFilters, phoneFilters.keySet(), new LinkedHashSet<>(), 0,
+                max, "From expensive to cheap");
+        model.addAttribute(PRODUCTS, phones);
+        model.addAttribute(MAX, max);
+
+        return FILTERS_PAGE;
     }
 
     @PostMapping("/phones")
@@ -151,18 +169,22 @@ public class MainController {
                                    @RequestParam(value = "filter-name", required = false) LinkedHashSet<String> filters,
                                    @RequestParam("input-min") Integer minValue, @RequestParam("input-max") Integer maxValue,
                                    @RequestParam("sort") String sortType) {
+
         getUserPreferences(model, authentication);
         Map<String, List<String>> phoneFilters = phoneService.getPhoneCharacteristics();
-        Set<String> keys = phoneFilters.keySet();
         List<? extends Product> phones = phoneService.phones(filters, phoneFilters, minValue, maxValue);
         phones = filterProducts.sort(phones, sortType);
-        Phone phone = utils.max(phoneService.getAllPhones());
-        if(phone != null)
-            model.addAttribute("max", phone.getPrice());
-        filterPostModel(model, "Phones", phoneFilters, keys, filters, minValue, maxValue, sortType);
-        model.addAttribute("products", phones);
+
+        Phone phoneWithMaxPrice = utils.max(phoneService.getAllPhones());
+        if (phoneWithMaxPrice != null) {
+            model.addAttribute(MAX, phoneWithMaxPrice.getPrice());
+        }
+
+        filterPostModel(model, PHONES, phoneFilters, phoneFilters.keySet(), filters, minValue, maxValue, sortType);
+        model.addAttribute(PRODUCTS, phones);
         model.addAttribute("maxValue", maxValue);
-        return "filters";
+
+        return FILTERS_PAGE;
     }
 
     @GetMapping("/laptops")
@@ -170,16 +192,18 @@ public class MainController {
         getUserPreferences(model, authentication);
         List<Laptop> laptops = laptopService.getAllLaptops();
         Map<String, List<String>> laptopFilters = laptopService.getLaptopCharacteristics();
-        Set<String> keys = laptopFilters.keySet();
-        LinkedHashSet<String> filters = new LinkedHashSet<>();
-        Laptop laptop = utils.maxLaptop(laptops);
-        int max = 0;
-        if(laptop != null)
-            max = utils.maxLaptop(laptops).getPrice();
 
-        filterPostModel(model, "Laptops", laptopFilters, keys, filters, 0, max, "From expensive to cheap");
-        model.addAttribute("products", laptops);
-        return "filters";
+        Laptop laptopWithMaxPrice = utils.maxLaptop(laptops);
+        int max = 0;
+        if (laptopWithMaxPrice != null) {
+            max = utils.maxLaptop(laptops).getPrice();
+        }
+
+        filterPostModel(model, LAPTOPS, laptopFilters, laptopFilters.keySet(),
+                new LinkedHashSet<>(), 0, max, "From expensive to cheap");
+        model.addAttribute(PRODUCTS, laptops);
+
+        return FILTERS_PAGE;
     }
 
     @PostMapping("/laptops")
@@ -187,43 +211,50 @@ public class MainController {
                                     @RequestParam(value = "filter-name", required = false) LinkedHashSet<String> filters,
                                     @RequestParam("input-min") Integer minValue, @RequestParam("input-max") Integer maxValue,
                                     @RequestParam("sort") String sortType) {
+
         getUserPreferences(model, authentication);
         Map<String, List<String>> laptopFilters = laptopService.getLaptopCharacteristics();
-        Set<String> keys = laptopFilters.keySet();
         List<Laptop> laptops = laptopService.laptops(filters, laptopFilters, minValue, maxValue);
-        Laptop laptop = utils.maxLaptop(laptops);
+
+        Laptop laptopWithMaxPrice = utils.maxLaptop(laptops);
         int max = 0;
-        if(laptop != null)
-            max = laptop.getPrice();
-        filterPostModel(model, "Laptops", laptopFilters, keys, filters, minValue, maxValue, sortType);
-        model.addAttribute("products", laptops);
-        model.addAttribute("max", max);
-        return "filters";
+        if (laptopWithMaxPrice != null) {
+            max = laptopWithMaxPrice.getPrice();
+        }
+
+        filterPostModel(model, LAPTOPS, laptopFilters, laptopFilters.keySet(), filters, minValue, maxValue, sortType);
+        model.addAttribute(PRODUCTS, laptops);
+        model.addAttribute(MAX, max);
+
+        return FILTERS_PAGE;
     }
 
     @GetMapping("/product/{id}")
     public String getDescription(Model model, Authentication authentication,
                                  @PathVariable("id") Long id) {
+
         getUserPreferences(model, authentication);
         List<Review> reviews = reviewService.findReviewsByProduct(id);
-        Integer rec = reviewService.calculateRecommended(reviews);
         Product product = filterProducts.getProductById(id);
         Map<String, List<String>> descTable = filterProducts.getDescTable(product);
-        Set<String> descTableKeys = descTable.keySet();
-        if (authentication != null)
+
+        if (authentication != null) {
             model.addAttribute("user", userDetailsService.getUserByEmail(authentication.getName()));
-        model.addAttribute("product", product);
+        }
+
+        model.addAttribute(PRODUCT, product);
         model.addAttribute("reviews", reviews);
-        model.addAttribute("recommended", rec);
+        model.addAttribute("recommended", reviewService.calculateRecommended(reviews));
         model.addAttribute("descTable", descTable);
-        model.addAttribute("descTableKeys", descTableKeys);
+        model.addAttribute("descTableKeys", descTable.keySet());
         model.addAttribute("descData", filterProducts.descData(product));
+
         return "description";
     }
 
     private void getUserPreferences(Model model, Authentication authentication) {
         if (utils.checkAuth(authentication)) {
-            model.addAttribute("isAuthenticated", true);
+            model.addAttribute(IS_AUTHENTICATED, true);
             User user = userDetailsService.getUserByEmail(authentication.getName());
             model.addAttribute("favoriteProducts", user.getFavorite().getFavoriteProducts());
             model.addAttribute("cartProducts", user.getCart().getCartProducts());
@@ -236,20 +267,21 @@ public class MainController {
                              @PathVariable("id") Long id, @RequestParam("name") String name,
                              @RequestParam("rate") Integer rate, @RequestParam("review") String review,
                              @RequestParam("recommend") Boolean recommend) {
+
         getUserPreferences(model, authentication);
         if (authentication != null) {
             User user = userDetailsService.getUserByEmail(authentication.getName());
             user.setName(name);
             userDetailsService.saveUser(user);
         }
-        Phone phone = phoneService.getPhoneById(id);
-        boolean flag = reviewService.addReview(rate, review, recommend, authentication, id);
+
         List<Review> reviews = reviewService.findReviewsByProduct(id);
 
-        model.addAttribute("product", phone);
-        model.addAttribute("reviewExists", flag);
+        model.addAttribute(PRODUCT, phoneService.getPhoneById(id));
+        model.addAttribute("reviewExists", reviewService.addReview(rate, review, recommend, authentication, id));
         model.addAttribute("reviews", reviews);
         model.addAttribute("recommended", reviewService.calculateRecommended(reviews));
+
         return "description";
     }
 
@@ -258,17 +290,19 @@ public class MainController {
         getUserPreferences(model, authentication);
         List<Watch> watches = watchService.getAllWatches();
         Map<String, List<String>> watchFilters = watchService.getWatchCharacteristics();
-        Set<String> keys = watchFilters.keySet();
-        LinkedHashSet<String> filters = new LinkedHashSet<>();
-        Watch watch = utils.maxWatch(watches);
-        int max = 0;
-        if(watch != null)
-            max = watch.getPrice();
 
-        filterPostModel(model, "Watches", watchFilters, keys, filters, 0, max, "From expensive to cheap");
-        model.addAttribute("products", watches);
-        model.addAttribute("max", max);
-        return "filters";
+        Watch watchWithMaxPrice = utils.maxWatch(watches);
+        int max = 0;
+        if (watchWithMaxPrice != null) {
+            max = watchWithMaxPrice.getPrice();
+        }
+
+        filterPostModel(model, "Watches", watchFilters, watchFilters.keySet(),
+                new LinkedHashSet<>(), 0, max, "From expensive to cheap");
+        model.addAttribute(PRODUCTS, watches);
+        model.addAttribute(MAX, max);
+
+        return FILTERS_PAGE;
     }
 
     @PostMapping("/watches")
@@ -276,129 +310,134 @@ public class MainController {
                                      @RequestParam(value = "filter-name", required = false) LinkedHashSet<String> filters,
                                      @RequestParam("input-min") Integer minValue, @RequestParam("input-max") Integer maxValue,
                                      @RequestParam("sort") String sortType) {
+
         getUserPreferences(model, authentication);
         Map<String, List<String>> watchFilters = watchService.getWatchCharacteristics();
-        Set<String> keys = watchFilters.keySet();
         List<Watch> watches = watchService.watches(filters, watchFilters, minValue, maxValue);
-        Watch watch = utils.maxWatch(watches);
-        int max = 0;
-        if(watch != null)
-            max = watch.getPrice();
 
-        filterPostModel(model, "Watches", watchFilters, keys, filters, minValue, maxValue, sortType);
-        model.addAttribute("products", watches);
-        model.addAttribute("max", max);
-        return "filters";
+        Watch watchWithMaxPrice = utils.maxWatch(watches);
+        int max = 0;
+        if (watchWithMaxPrice != null) {
+            max = watchWithMaxPrice.getPrice();
+        }
+
+        filterPostModel(model, "Watches", watchFilters, watchFilters.keySet(),
+                filters, minValue, maxValue, sortType);
+        model.addAttribute(PRODUCTS, watches);
+        model.addAttribute(MAX, max);
+
+        return FILTERS_PAGE;
     }
 
     @GetMapping("/discounts")
     public String discounts(Model model, Authentication authentication) {
         getUserPreferences(model, authentication);
-        List<Product> products = filterProducts.getProductsWithDiscount();
-        model.addAttribute("products", products);
-        model.addAttribute("seacrhBool", true);
-        model.addAttribute("category", "Discounts");
-        return "filters";
+        model.addAttribute(PRODUCTS, filterProducts.getProductsWithDiscount());
+        model.addAttribute(HAS_ASIDE_MENU, true);
+        model.addAttribute(CATEGORY, "Discounts");
+
+        return FILTERS_PAGE;
     }
 
     @PostMapping("/discounts")
     public String sortedDiscounts(Model model, Authentication authentication, @RequestParam("sort") String sortType) {
         getUserPreferences(model, authentication);
-        List<? extends Product> products = filterProducts.getProductsWithDiscount();
-        products = filterProducts.sort(products, sortType);
-        model.addAttribute("products", products);
-        model.addAttribute("seacrhBool", true);
-        model.addAttribute("category", "Discounts");
-        return "filters";
+        model.addAttribute(PRODUCTS, filterProducts.sort(filterProducts.getProductsWithDiscount(), sortType));
+        model.addAttribute(HAS_ASIDE_MENU, true);
+        model.addAttribute(CATEGORY, "Discounts");
+
+        return FILTERS_PAGE;
     }
 
     @GetMapping("/bestsellers")
     public String bestsellers(Model model, Authentication authentication) {
         getUserPreferences(model, authentication);
-        List<Product> products = filterProducts.getBestsellers();
-        model.addAttribute("products", products);
-        model.addAttribute("seacrhBool", true);
-        model.addAttribute("sortType", "By popularity");
-        model.addAttribute("category", "Bestsellers");
-        return "filters";
+        model.addAttribute(PRODUCTS, filterProducts.getBestsellers());
+        model.addAttribute(HAS_ASIDE_MENU, true);
+        model.addAttribute(SORT_TYPE, "By popularity");
+        model.addAttribute(CATEGORY, "Bestsellers");
+
+        return FILTERS_PAGE;
     }
 
     @PostMapping("/bestsellers")
     public String sortedBestsellers(Model model, Authentication authentication, @RequestParam("sort") String sortType) {
         getUserPreferences(model, authentication);
-        List<? extends Product> products = filterProducts.getBestsellers();
-        products = filterProducts.sort(products, sortType);
-        model.addAttribute("products", products);
-        model.addAttribute("seacrhBool", true);
-        model.addAttribute("sortType", sortType);
-        model.addAttribute("category", "Bestsellers");
-        return "filters";
+        model.addAttribute(PRODUCTS, filterProducts.sort(filterProducts.getBestsellers(), sortType));
+        model.addAttribute(HAS_ASIDE_MENU, true);
+        model.addAttribute(SORT_TYPE, sortType);
+        model.addAttribute(CATEGORY, "Bestsellers");
+
+        return FILTERS_PAGE;
     }
 
     @GetMapping("/about")
     public String getAboutPage(Model model, Authentication authentication) {
         getUserPreferences(model, authentication);
+        model.addAttribute("careerForm", new Career());
         return "about";
     }
 
     @PostMapping("/about")
-    public String filledCareer(Model model, Authentication authentication,
-                               @RequestParam("fname") String fname,
-                               @RequestParam("lname") String lname,
-                               @RequestParam("email") String email,
-                               @RequestParam("phone") String phone,
-                               @RequestParam("pos") String pos,
-                               @RequestParam("link") String link) {
+    public String filledCareer(Model model, Authentication authentication, @ModelAttribute("careerForm") Career career) {
         getUserPreferences(model, authentication);
-        Career career = new Career(fname, lname, email, phone, pos, link);
-        String result = careerService.addCareerUser(career);
-        model.addAttribute("result", result);
+        model.addAttribute(RESULT, careerService.addCareerUser(career));
+
         return "about";
     }
 
     @GetMapping("/checkout")
     public String getCheckoutPage(Model model, Authentication authentication) {
         if (utils.checkAuth(authentication)) {
-            model.addAttribute("isAuthenticated", true);
+            model.addAttribute(IS_AUTHENTICATED, true);
             User user = userDetailsService.getUserByEmail(authentication.getName());
             model.addAttribute("cartProducts", user.getCart().getCartProducts());
             model.addAttribute("total", user.getCart().getTotalPrice());
         }
+
         return "checkout";
     }
 
     @GetMapping("/checkout/{id}")
-    public String buyProduct(Model model, @PathVariable("id") Long productId){
+    public String buyProduct(Model model, @PathVariable("id") Long productId) {
         Product product = filterProducts.getProductById(productId);
-        model.addAttribute("product", product);
+        model.addAttribute(PRODUCT, product);
         model.addAttribute("total", product.getPrice());
+
         return "checkout";
     }
 
     @PostMapping(value = {"/checkout", "/checkout/{id}"})
     public String pay(Model model,
                       @RequestParam("name") String name,
-                      @RequestParam("phone1") String phone1, @RequestParam("phone2") String phone2, @RequestParam("phone3") String phone3,
+                      @RequestParam("phone1") String phone1,
+                      @RequestParam("phone2") String phone2,
+                      @RequestParam("phone3") String phone3,
                       @RequestParam("email") String email,
                       @RequestParam("city") String city,
-                      @RequestParam("part1") String card1, @RequestParam("part2") String card2,
-                      @RequestParam("part3") String card3, @RequestParam("part4") String card4,
-                      @RequestParam("prefix") String date1, @RequestParam("suffix") String date2,
+                      @RequestParam("part1") String card1,
+                      @RequestParam("part2") String card2,
+                      @RequestParam("part3") String card3,
+                      @RequestParam("part4") String card4,
+                      @RequestParam("prefix") String date1,
+                      @RequestParam("suffix") String date2,
                       @RequestParam("cvv") String cvv,
-                      @RequestParam("total") String total
-    ) {
+                      @RequestParam("total") String total) {
+
         String phone = phone1 + phone2 + phone3;
         String card = card1 + card2 + card3 + card4;
         String date = date1 + "/" + date2;
         Transaction transaction = transactionService.addNewTransaction(name, phone, email, city, card,
-                date, cvv, Integer.valueOf(total.substring(0, total.length()-1)));
+                date, cvv, Integer.valueOf(total.substring(0, total.length() - 1)));
         model.addAttribute("transaction", transaction);
+
         return "success";
     }
 
     @GetMapping("/contact")
     public String getContactPage(Model model, Authentication authentication) {
         getUserPreferences(model, authentication);
+
         return "contact";
     }
 
@@ -408,12 +447,13 @@ public class MainController {
                                     @RequestParam("lname") String lname,
                                     @RequestParam("email") String email,
                                     @RequestParam("subject") String subject,
-                                    @RequestParam("message") String message
-    ) {
+                                    @RequestParam("message") String message) {
+
         getUserPreferences(model, authentication);
         Contact contact = new Contact(fname, lname, email);
         String result = contactService.addContactMessage(contact, subject, message);
-        model.addAttribute("result", result);
+        model.addAttribute(RESULT, result);
+
         return "contact";
     }
 
@@ -421,29 +461,31 @@ public class MainController {
     public String filledEmail(Model model, Authentication authentication,
                               @RequestParam("email") String email) {
         getUserPreferences(model, authentication);
-        String result = contactService.subs(email);
-        model.addAttribute("result", result);
+        model.addAttribute(RESULT, contactService.subs(email));
+
         return "contact";
     }
 
     @GetMapping("/help")
     public String getHelpPage(Model model, Authentication authentication) {
         getUserPreferences(model, authentication);
-        List<FAQ> faqs = faqService.getFaqs();
-        model.addAttribute("faqs", faqs);
+        model.addAttribute("faqs", faqService.getFaqs());
+
         return "help";
     }
 
     private Model filterPostModel(Model model, String category, Map<String, List<String>> mapFilters,
                                   Set<String> keys, Set<String> filters,
                                   Integer minValue, Integer maxValue, String sortType) {
-        model.addAttribute("category", category);
-        model.addAttribute("filters", mapFilters);
+
+        model.addAttribute(CATEGORY, category);
+        model.addAttribute(FILTERS_PAGE, mapFilters);
         model.addAttribute("filtersKeys", keys);
         model.addAttribute("filterName", filters);
         model.addAttribute("minValue", minValue);
         model.addAttribute("maxValue", maxValue);
-        model.addAttribute("sortType", sortType);
+        model.addAttribute(SORT_TYPE, sortType);
+
         return model;
     }
 }

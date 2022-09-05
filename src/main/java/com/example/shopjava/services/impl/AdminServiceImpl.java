@@ -22,14 +22,16 @@ public class AdminServiceImpl implements AdminService {
     public List<AdminHome> getBannerData() {
         List<AdminHome> banners = new ArrayList<>();
         List<AdminHome> adminHomeList = adminRepo.findAll(Sort.by("date").descending());
+
         for (int i = 1; i <= 2; i++) {
             for (AdminHome adminHome : adminHomeList) {
-                if(adminHome.getImageNumber() == i){
+                if (adminHome.getImageNumber() == i) {
                     banners.add(adminHome);
                     break;
                 }
             }
         }
+
         return banners;
     }
 
@@ -37,15 +39,16 @@ public class AdminServiceImpl implements AdminService {
     @Transactional
     public void addNewBannerState(List<AdminHome> adminHomeList) {
         List<AdminHome> dbAdminHomeList = adminRepo.findAll(Sort.by("date").descending());
+
         boolean flag = false;
         for (AdminHome adminHome : adminHomeList) {
             for (AdminHome home : dbAdminHomeList) {
-                if(adminHome.equals(home)){
+                if (adminHome.equals(home)) {
                     flag = true;
                     break;
                 }
             }
-            if(!flag){
+            if (!flag) {
                 adminRepo.save(adminHome);
             }
         }
