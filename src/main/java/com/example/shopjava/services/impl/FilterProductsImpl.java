@@ -18,19 +18,19 @@ import java.util.stream.Collectors;
 public class FilterProductsImpl implements FilterProducts {
 
     @Autowired
-    private ProductRepository productRepository;
+    private ProductRepo productRepository;
 
     @Autowired
-    private PhoneRepository phoneRepository;
+    private PhoneRepo phoneRepository;
 
     @Autowired
-    private LaptopRepository laptopRepository;
+    private LaptopRepo laptopRepository;
 
     @Autowired
-    private WatchRepository watchRepository;
+    private WatchRepo watchRepository;
 
     @Autowired
-    private CategoryRepository categoryRepository;
+    private CategoryRepo categoryRepository;
 
     @Transactional
     @Override

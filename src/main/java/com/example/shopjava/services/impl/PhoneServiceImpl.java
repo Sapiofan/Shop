@@ -3,7 +3,7 @@ package com.example.shopjava.services.impl;
 import com.example.shopjava.entities.product.Filters;
 import com.example.shopjava.entities.product.Phone;
 import com.example.shopjava.repos.FilterProductsRepo;
-import com.example.shopjava.repos.PhoneRepository;
+import com.example.shopjava.repos.PhoneRepo;
 import com.example.shopjava.services.PhoneService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,7 +17,7 @@ import java.util.Set;
 public class PhoneServiceImpl implements PhoneService {
 
     @Autowired
-    private PhoneRepository phoneRepository;
+    private PhoneRepo phoneRepository;
 
     @Autowired
     private FilterProductsRepo filterProductsRepo;

@@ -1,7 +1,7 @@
 package com.example.shopjava.services.impl;
 
 import com.example.shopjava.entities.another.FAQ;
-import com.example.shopjava.repos.FaqRepository;
+import com.example.shopjava.repos.FaqRepo;
 import com.example.shopjava.services.FaqService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -15,7 +15,7 @@ import java.util.List;
 public class FaqServiceImpl implements FaqService {
 
     @Autowired
-    private FaqRepository faqRepository;
+    private FaqRepo faqRepository;
 
     private static final Logger log = LoggerFactory.getLogger(FaqServiceImpl.class);
 

@@ -3,9 +3,9 @@ package com.example.shopjava.services.impl;
 import com.example.shopjava.entities.product.Product;
 import com.example.shopjava.entities.product.Review;
 import com.example.shopjava.entities.user.User;
-import com.example.shopjava.repos.ProductRepository;
-import com.example.shopjava.repos.ReviewRepository;
-import com.example.shopjava.repos.UserRepository;
+import com.example.shopjava.repos.ProductRepo;
+import com.example.shopjava.repos.ReviewRepo;
+import com.example.shopjava.repos.UserRepo;
 import com.example.shopjava.services.ReviewService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -27,13 +27,13 @@ import java.util.List;
 public class ReviewServiceImpl implements ReviewService {
 
     @Autowired
-    private ReviewRepository reviewRepository;
+    private ReviewRepo reviewRepository;
 
     @Autowired
-    private UserRepository userRepository;
+    private UserRepo userRepository;
 
     @Autowired
-    private ProductRepository productRepository;
+    private ProductRepo productRepository;
 
     private static final Logger log = LoggerFactory.getLogger(ReviewServiceImpl.class);
 

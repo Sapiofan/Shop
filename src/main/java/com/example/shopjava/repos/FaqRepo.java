@@ -5,7 +5,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 
-public interface FaqRepository extends JpaRepository<FAQ, Long> {
+public interface FaqRepo extends JpaRepository<FAQ, Long> {
     @Query("select f from FAQ f where f.question = :question")
     FAQ findByQuestion(String question);
 

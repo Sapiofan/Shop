@@ -1,7 +1,7 @@
 package com.example.shopjava.services;
 
 import com.example.shopjava.entities.user.Transaction;
-import com.example.shopjava.repos.TransactionRepository;
+import com.example.shopjava.repos.TransactionRepo;
 import com.example.shopjava.services.impl.TransactionServiceImpl;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -17,7 +17,7 @@ public class TransactionServiceTests {
     private TransactionServiceImpl transactionService;
 
     @Mock
-    TransactionRepository repository;
+    TransactionRepo repository;
 
     @Test
     public void addTransactionTest(){

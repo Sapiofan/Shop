@@ -1,7 +1,7 @@
 package com.example.shopjava.services;
 
 import com.example.shopjava.entities.another.Career;
-import com.example.shopjava.repos.CareerRepository;
+import com.example.shopjava.repos.CareerRepo;
 import com.example.shopjava.services.impl.CareerServiceImpl;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -27,7 +27,7 @@ public class CareerServiceTests {
     private CareerServiceImpl careerService;
 
     @Mock
-    CareerRepository careerRepository;
+    CareerRepo careerRepository;
 
     @Test
     public void addExistedCareerUserTest(){

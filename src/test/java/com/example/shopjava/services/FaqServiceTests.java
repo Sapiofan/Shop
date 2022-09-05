@@ -1,7 +1,7 @@
 package com.example.shopjava.services;
 
 import com.example.shopjava.entities.another.FAQ;
-import com.example.shopjava.repos.FaqRepository;
+import com.example.shopjava.repos.FaqRepo;
 import com.example.shopjava.services.impl.FaqServiceImpl;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -23,7 +23,7 @@ public class FaqServiceTests {
     private FaqServiceImpl faqService;
 
     @Mock
-    FaqRepository faqRepository;
+    FaqRepo faqRepository;
 
     @Test
     public void addExistedFaqTest(){

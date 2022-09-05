@@ -1,7 +1,7 @@
 package com.example.shopjava.services.impl;
 
 import com.example.shopjava.entities.user.Transaction;
-import com.example.shopjava.repos.TransactionRepository;
+import com.example.shopjava.repos.TransactionRepo;
 import com.example.shopjava.services.TransactionService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -16,7 +16,7 @@ public class TransactionServiceImpl implements TransactionService {
     private static final Logger log = LoggerFactory.getLogger(TransactionServiceImpl.class);
 
     @Autowired
-    private TransactionRepository transactionRepository;
+    private TransactionRepo transactionRepository;
 
     @Override
     @Transactional

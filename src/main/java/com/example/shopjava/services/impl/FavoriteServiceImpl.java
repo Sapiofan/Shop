@@ -2,8 +2,8 @@ package com.example.shopjava.services.impl;
 
 import com.example.shopjava.entities.user.Favorite;
 import com.example.shopjava.entities.product.Product;
-import com.example.shopjava.repos.FavoriteRepository;
-import com.example.shopjava.repos.ProductRepository;
+import com.example.shopjava.repos.FavoriteRepo;
+import com.example.shopjava.repos.ProductRepo;
 import com.example.shopjava.services.FavoriteService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,10 +16,10 @@ import java.util.Set;
 public class FavoriteServiceImpl implements FavoriteService {
 
     @Autowired
-    private FavoriteRepository favoriteRepository;
+    private FavoriteRepo favoriteRepository;
 
     @Autowired
-    private ProductRepository productRepository;
+    private ProductRepo productRepository;
 
     @Override
     @Transactional

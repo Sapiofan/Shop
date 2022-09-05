@@ -2,8 +2,8 @@ package com.example.shopjava.services;
 
 import com.example.shopjava.entities.contacts.Contact;
 import com.example.shopjava.entities.contacts.Message;
-import com.example.shopjava.repos.ContactRepository;
-import com.example.shopjava.repos.MessageRepository;
+import com.example.shopjava.repos.ContactRepo;
+import com.example.shopjava.repos.MessageRepo;
 import com.example.shopjava.services.impl.ContactServiceImpl;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -29,10 +29,10 @@ public class ContactServiceTests {
     private ContactServiceImpl contactService;
 
     @Mock
-    ContactRepository contactRepository;
+    ContactRepo contactRepository;
 
     @Mock
-    MessageRepository messageRepository;
+    MessageRepo messageRepository;
 
     @Test
     public void addContactMessageTest(){

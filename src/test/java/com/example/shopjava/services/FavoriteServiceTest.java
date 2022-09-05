@@ -3,11 +3,9 @@ package com.example.shopjava.services;
 import com.example.shopjava.entities.product.Product;
 import com.example.shopjava.entities.user.Favorite;
 import com.example.shopjava.entities.user.User;
-import com.example.shopjava.repos.FavoriteRepository;
-import com.example.shopjava.repos.PhoneRepository;
-import com.example.shopjava.repos.ProductRepository;
+import com.example.shopjava.repos.FavoriteRepo;
+import com.example.shopjava.repos.ProductRepo;
 import com.example.shopjava.services.impl.FavoriteServiceImpl;
-import com.example.shopjava.services.impl.PhoneServiceImpl;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -28,10 +26,10 @@ public class FavoriteServiceTest {
     private FavoriteServiceImpl favoriteService;
 
     @Mock
-    FavoriteRepository favoriteRepository;
+    FavoriteRepo favoriteRepository;
 
     @Mock
-    ProductRepository productRepository;
+    ProductRepo productRepository;
 
     @Test
     public void addFavoriteTest(){

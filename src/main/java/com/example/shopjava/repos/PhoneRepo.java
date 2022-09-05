@@ -4,9 +4,7 @@ import com.example.shopjava.entities.product.Phone;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
-import java.util.List;
-
-public interface PhoneRepository extends JpaRepository<Phone, Long> {
+public interface PhoneRepo extends JpaRepository<Phone, Long> {
     @Query("select p from Phone p where p.name = :name")
     Phone getPhoneByName(String name);
 

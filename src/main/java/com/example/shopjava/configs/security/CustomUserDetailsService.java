@@ -4,7 +4,7 @@ import com.example.shopjava.entities.user.cart.Cart;
 import com.example.shopjava.entities.user.Favorite;
 import com.example.shopjava.entities.user.Role;
 import com.example.shopjava.entities.user.User;
-import com.example.shopjava.repos.UserRepository;
+import com.example.shopjava.repos.UserRepo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,7 +28,7 @@ import static org.springframework.security.web.context.HttpSessionSecurityContex
 @Service
 public class CustomUserDetailsService implements UserDetailsService {
     @Autowired
-    private UserRepository userRepository;
+    private UserRepo userRepository;
 
     @Autowired
     AuthenticationManager authenticationManager;

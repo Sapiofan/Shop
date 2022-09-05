@@ -3,7 +3,7 @@ package com.example.shopjava.services.impl;
 import com.example.shopjava.entities.product.Filters;
 import com.example.shopjava.entities.product.Laptop;
 import com.example.shopjava.repos.FilterProductsRepo;
-import com.example.shopjava.repos.LaptopRepository;
+import com.example.shopjava.repos.LaptopRepo;
 import com.example.shopjava.services.LaptopService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -20,7 +20,7 @@ public class LaptopServiceImpl implements LaptopService {
     private FilterProductsRepo filterProductsRepo;
 
     @Autowired
-    private LaptopRepository laptopRepository;
+    private LaptopRepo laptopRepository;
 
     @Override
     public Map<String, List<String>> getLaptopCharacteristics() {

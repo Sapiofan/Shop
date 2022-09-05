@@ -1,13 +1,10 @@
 package com.example.shopjava.services;
 
-import com.example.shopjava.entities.another.Career;
 import com.example.shopjava.entities.product.Product;
 import com.example.shopjava.entities.product.Review;
-import com.example.shopjava.repos.ProductRepository;
-import com.example.shopjava.repos.ReviewRepository;
-import com.example.shopjava.repos.TransactionRepository;
+import com.example.shopjava.repos.ProductRepo;
+import com.example.shopjava.repos.ReviewRepo;
 import com.example.shopjava.services.impl.ReviewServiceImpl;
-import com.example.shopjava.services.impl.TransactionServiceImpl;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -15,8 +12,6 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.data.domain.*;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.test.context.support.WithMockUser;
 
 import java.time.Instant;
 import java.util.ArrayList;
@@ -33,10 +28,10 @@ public class ReviewServiceTests {
     private ReviewServiceImpl reviewService;
 
     @Mock
-    ReviewRepository reviewRepository;
+    ReviewRepo reviewRepository;
 
     @Mock
-    ProductRepository productRepository;
+    ProductRepo productRepository;
 
     @Test
     public void getReviewsTest(){

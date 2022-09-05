@@ -5,7 +5,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
 
-public interface LaptopRepository extends JpaRepository<Laptop, Long> {
+public interface LaptopRepo extends JpaRepository<Laptop, Long> {
     @Override
     List<Laptop> findAll();
 }

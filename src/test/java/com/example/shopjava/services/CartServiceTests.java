@@ -5,8 +5,8 @@ import com.example.shopjava.entities.user.User;
 import com.example.shopjava.entities.user.cart.Cart;
 import com.example.shopjava.entities.user.cart.CartProduct;
 import com.example.shopjava.repos.CartProductRepo;
-import com.example.shopjava.repos.CartRepository;
-import com.example.shopjava.repos.ProductRepository;
+import com.example.shopjava.repos.CartRepo;
+import com.example.shopjava.repos.ProductRepo;
 import com.example.shopjava.services.impl.CartServiceImpl;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -28,10 +28,10 @@ public class CartServiceTests {
     private CartServiceImpl cartService;
 
     @Mock
-    CartRepository cartRepository;
+    CartRepo cartRepository;
 
     @Mock
-    ProductRepository productRepository;
+    ProductRepo productRepository;
 
     @Mock
     CartProductRepo cartProductRepo;

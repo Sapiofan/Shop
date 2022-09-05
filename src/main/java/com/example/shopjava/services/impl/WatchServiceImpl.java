@@ -3,7 +3,7 @@ package com.example.shopjava.services.impl;
 import com.example.shopjava.entities.product.Filters;
 import com.example.shopjava.entities.product.Watch;
 import com.example.shopjava.repos.FilterProductsRepo;
-import com.example.shopjava.repos.WatchRepository;
+import com.example.shopjava.repos.WatchRepo;
 import com.example.shopjava.services.WatchService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,7 +17,7 @@ import java.util.Set;
 public class WatchServiceImpl implements WatchService {
 
     @Autowired
-    private WatchRepository watchRepository;
+    private WatchRepo watchRepository;
 
     @Autowired
     private FilterProductsRepo filterProductsRepo;

@@ -1,7 +1,7 @@
 package com.example.shopjava.services;
 
 import com.example.shopjava.entities.product.Product;
-import com.example.shopjava.repos.ProductRepository;
+import com.example.shopjava.repos.ProductRepo;
 import com.example.shopjava.services.impl.FilterProductsImpl;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -24,7 +24,7 @@ public class ProductServiceTest {
     private FilterProductsImpl filterProducts;
 
     @Mock
-    ProductRepository productRepository;
+    ProductRepo productRepository;
 
     @Test
     public void addNewProduct(){

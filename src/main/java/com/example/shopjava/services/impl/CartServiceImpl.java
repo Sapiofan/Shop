@@ -4,11 +4,9 @@ import com.example.shopjava.entities.user.cart.Cart;
 import com.example.shopjava.entities.user.cart.CartProduct;
 import com.example.shopjava.entities.product.Product;
 import com.example.shopjava.repos.CartProductRepo;
-import com.example.shopjava.repos.CartRepository;
-import com.example.shopjava.repos.ProductRepository;
+import com.example.shopjava.repos.CartRepo;
+import com.example.shopjava.repos.ProductRepo;
 import com.example.shopjava.services.CartService;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,10 +16,10 @@ import javax.transaction.Transactional;
 public class CartServiceImpl implements CartService {
 
     @Autowired
-    private CartRepository cartRepository;
+    private CartRepo cartRepository;
 
     @Autowired
-    private ProductRepository productRepository;
+    private ProductRepo productRepository;
 
     @Autowired
     private CartProductRepo cartProductRepo;

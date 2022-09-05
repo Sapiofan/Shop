@@ -8,7 +8,7 @@ import org.springframework.data.jpa.repository.Query;
 
 import java.util.List;
 
-public interface ProductRepository extends JpaRepository<Product, Long> {
+public interface ProductRepo extends JpaRepository<Product, Long> {
 
     @Query("SELECT p from Product p where lower(p.name) LIKE lower(concat('%', ?1,'%'))" +
             " or lower(p.brand) LIKE lower(concat('%', ?1,'%'))")

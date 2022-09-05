@@ -1,11 +1,8 @@
 package com.example.shopjava.services;
 
 import com.example.shopjava.entities.product.Laptop;
-import com.example.shopjava.entities.product.Phone;
-import com.example.shopjava.repos.LaptopRepository;
-import com.example.shopjava.repos.PhoneRepository;
+import com.example.shopjava.repos.LaptopRepo;
 import com.example.shopjava.services.impl.LaptopServiceImpl;
-import com.example.shopjava.services.impl.PhoneServiceImpl;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -28,7 +25,7 @@ public class LaptopServiceTests {
     private LaptopServiceImpl laptopService;
 
     @Mock
-    LaptopRepository laptopRepository;
+    LaptopRepo laptopRepository;
 
     List<Laptop> laptops = new ArrayList<>();
 

@@ -7,7 +7,7 @@ import org.springframework.data.jpa.repository.Query;
 
 import java.util.List;
 
-public interface ReviewRepository extends JpaRepository<Review, Long> {
+public interface ReviewRepo extends JpaRepository<Review, Long> {
     @Query("SELECT r FROM Review r WHERE r.product.id = :productId")
     List<Review> findReviewsByProduct(Long productId);
 

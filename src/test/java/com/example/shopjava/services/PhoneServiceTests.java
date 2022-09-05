@@ -1,13 +1,9 @@
 package com.example.shopjava.services;
 
 import com.example.shopjava.entities.product.Phone;
-import com.example.shopjava.entities.product.Product;
-import com.example.shopjava.repos.PhoneRepository;
-import com.example.shopjava.repos.ProductRepository;
-import com.example.shopjava.services.impl.FilterProductsImpl;
+import com.example.shopjava.repos.PhoneRepo;
 import com.example.shopjava.services.impl.PhoneServiceImpl;
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -28,7 +24,7 @@ public class PhoneServiceTests {
     private PhoneServiceImpl phoneService;
 
     @Mock
-    PhoneRepository phoneRepository;
+    PhoneRepo phoneRepository;
 
     List<Phone> phones = new ArrayList<>();
 
