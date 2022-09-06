@@ -78,10 +78,7 @@ public class Commands {
         if (authentication != null) {
             User user = userDetailsService.getUserByEmail(authentication.getName());
             cartService.addProduct(user.getCart(), productId);
-//            Set<CartProduct> cartProducts = cartService.addProduct(user.getCart(), productId).getCartProducts();
-//            for (CartProduct cartProduct : cartProducts) {
-//                log.info(cartProduct.getProduct().getName());
-//            }
+
             return user.getCart().getCartProducts();
         }
 

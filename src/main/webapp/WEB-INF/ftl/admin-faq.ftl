@@ -30,6 +30,9 @@
     <#if !editMode>
         <#assign css = "./../static/css">
     </#if>
+    <#if deletePath??>
+        <#assign css = "./../../../static/css">
+    </#if>
 
     <link rel="stylesheet" type="text/css" href="<@spring.url '${css}/general.css'/>"/>
     <link rel="stylesheet" type="text/css" href="<@spring.url '${css}/admin.css'/>"/>

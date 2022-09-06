@@ -243,13 +243,8 @@ public class MainController {
         }
 
         model.addAttribute(PRODUCT, product);
-        model.addAttribute("reviews", reviews);
-        model.addAttribute("recommended", reviewService.calculateRecommended(reviews));
-        model.addAttribute("descTable", descTable);
-        model.addAttribute("descTableKeys", descTable.keySet());
-        model.addAttribute("descData", filterProducts.descData(product));
 
-        return "description";
+        return getProductDetails(model, product, reviews, descTable);
     }
 
     private void getUserPreferences(Model model, Authentication authentication) {
@@ -275,12 +270,21 @@ public class MainController {
             userDetailsService.saveUser(user);
         }
 
-        List<Review> reviews = reviewService.findReviewsByProduct(id);
+        Product product = filterProducts.getProductById(id);
 
-        model.addAttribute(PRODUCT, phoneService.getPhoneById(id));
+        model.addAttribute(PRODUCT, product);
         model.addAttribute("reviewExists", reviewService.addReview(rate, review, recommend, authentication, id));
+
+        return getProductDetails(model, product,
+                reviewService.findReviewsByProduct(id), filterProducts.getDescTable(product));
+    }
+
+    private String getProductDetails(Model model, Product product, List<Review> reviews, Map<String, List<String>> descTable) {
         model.addAttribute("reviews", reviews);
         model.addAttribute("recommended", reviewService.calculateRecommended(reviews));
+        model.addAttribute("descTable", descTable);
+        model.addAttribute("descTableKeys", descTable.keySet());
+        model.addAttribute("descData", filterProducts.descData(product));
 
         return "description";
     }

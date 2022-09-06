@@ -12,10 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import java.time.Instant;
@@ -25,6 +22,14 @@ import java.util.*;
 public class AdminController {
 
     private static final Logger log = LoggerFactory.getLogger(AdminController.class);
+    public static final String EDIT_MODE = "editMode";
+    public static final String FAQS = "faqs";
+    public static final String ID = "id";
+    public static final String TOTAL_PAGES = "totalPages";
+    public static final String TOTAL_ITEMS = "totalItems";
+    public static final String CURRENT_PAGE = "currentPage";
+    public static final String KEYS = "keys";
+    public static final String AVAILABLE_FUNCTION = "Present?";
 
     @Autowired
     private FaqService faqService;
@@ -65,8 +70,7 @@ public class AdminController {
                                  @RequestParam("banner11") String banner11, @RequestParam("banner12") String banner12,
                                  @RequestParam("banner13") String banner13, @RequestParam("banner21") String banner21,
                                  @RequestParam("banner22") String banner22, @RequestParam("banner23") String banner23,
-                                 @RequestParam("productId1") Long productId1, @RequestParam("productId2") Long productId2
-    ) {
+                                 @RequestParam("productId1") Long productId1, @RequestParam("productId2") Long productId2) {
         return addBannersProps(model, link1, link2, banner11, banner12, banner13, banner21, banner22, banner23, productId1, productId2);
     }
 
@@ -76,8 +80,8 @@ public class AdminController {
                                   @RequestParam("banner11") String banner11, @RequestParam("banner12") String banner12,
                                   @RequestParam("banner13") String banner13, @RequestParam("banner21") String banner21,
                                   @RequestParam("banner22") String banner22, @RequestParam("banner23") String banner23,
-                                  @RequestParam("productId1") Long productId1, @RequestParam("productId2") Long productId2
-                                  ) {
+                                  @RequestParam("productId1") Long productId1, @RequestParam("productId2") Long productId2) {
+
         List<AdminHome> adminHomeList = new ArrayList<>();
         String banner1Text = banner11 + "#" + banner12 + "#" + banner13;
         String banner2Text = banner21 + "#" + banner22 + "#" + banner23;
@@ -85,7 +89,8 @@ public class AdminController {
         adminHomeList.add(new AdminHome(2, link2, banner2Text, productId2));
         adminService.addNewBannerState(adminHomeList);
 
-        return addBannersProps(model, link1, link2, banner11, banner12, banner13, banner21, banner22, banner23, productId1, productId2);
+        return addBannersProps(model, link1, link2, banner11, banner12, banner13, banner21,
+                banner22, banner23, productId1, productId2);
     }
 
     @GetMapping("/admin/career")
@@ -94,51 +99,54 @@ public class AdminController {
     }
 
     @GetMapping("/admin/career/{pageNum}")
-    public String getAdminCareer(Model model,
-                                 @PathVariable("pageNum") int pageNum) {
+    public String getAdminCareer(Model model, @PathVariable("pageNum") int pageNum) {
         Page<Career> pageCareers = careerService.getCareers(pageNum);
-        List<Career> careers = pageCareers.getContent();
-        model.addAttribute("currentPage", pageNum);
-        model.addAttribute("totalPages", pageCareers.getTotalPages());
-        model.addAttribute("totalItems", pageCareers.getTotalElements());
-        model.addAttribute("careers", careers);
+
+        model.addAttribute(CURRENT_PAGE, pageNum);
+        model.addAttribute(TOTAL_PAGES, pageCareers.getTotalPages());
+        model.addAttribute(TOTAL_ITEMS, pageCareers.getTotalElements());
+        model.addAttribute("careers", pageCareers.getContent());
+
         return "admin-career";
     }
 
     @GetMapping("/admin/career/{pageNum}/delete/{id}")
-    public String deleteCareer(Model model, @PathVariable("id") Long id,
-                               @PathVariable("pageNum") int pageNum) {
+    public String deleteCareer(Model model, @PathVariable(ID) Long id, @PathVariable("pageNum") int pageNum) {
         careerService.deleteCareerUserById(id);
         Page<Career> pageCareers = careerService.getCareers(pageNum);
         List<Career> careers = pageCareers.getContent();
+
         if (careers.isEmpty() && pageNum != 1) {
             pageCareers = careerService.getCareers(pageNum - 1);
             careers = pageCareers.getContent();
         }
-        model.addAttribute("currentPage", pageNum);
-        model.addAttribute("totalPages", pageCareers.getTotalPages());
-        model.addAttribute("totalItems", pageCareers.getTotalElements());
+
+        model.addAttribute(CURRENT_PAGE, pageNum);
+        model.addAttribute(TOTAL_PAGES, pageCareers.getTotalPages());
+        model.addAttribute(TOTAL_ITEMS, pageCareers.getTotalElements());
         model.addAttribute("careers", careers);
+        model.addAttribute("deletePath", true);
+
         return "admin-career";
     }
 
     @GetMapping("/admin/faq")
     public String getAdminFaq(Model model) {
-        List<FAQ> faqs = faqService.getFaqs();
-        model.addAttribute("faqs", faqs);
-        model.addAttribute("editMode", false);
+        model.addAttribute(FAQS, faqService.getFaqs());
+        model.addAttribute(EDIT_MODE, false);
         return "admin-faq";
     }
 
     @PostMapping(value = "/admin/faq", params = "addFaq")
     public String addFaq(Model model,
                          @RequestParam("question") String question,
-                         @RequestParam("answer") String answer
-    ) {
+                         @RequestParam("answer") String answer) {
+
         faqService.addFaq(new FAQ(question, answer));
-        List<FAQ> faqs = faqService.getFaqs();
-        model.addAttribute("faqs", faqs);
-        model.addAttribute("editMode", false);
+
+        model.addAttribute(FAQS, faqService.getFaqs());
+        model.addAttribute(EDIT_MODE, false);
+
         return "admin-faq";
     }
 
@@ -146,14 +154,14 @@ public class AdminController {
     public String getEditFaq(Model model,
                              @RequestParam("ex-question") String question,
                              @RequestParam("ex-answer") String answer,
-                             @PathVariable("id") Long id
-    ) {
-        List<FAQ> faqs = faqService.getFaqs();
-        model.addAttribute("faqs", faqs);
-        model.addAttribute("editMode", true);
+                             @PathVariable(ID) Long id) {
+
+        model.addAttribute(FAQS, faqService.getFaqs());
+        model.addAttribute(EDIT_MODE, true);
         model.addAttribute("question", question);
         model.addAttribute("answer", answer);
-        model.addAttribute("id", id);
+        model.addAttribute(ID, id);
+
         return "admin-faq";
     }
 
@@ -161,27 +169,30 @@ public class AdminController {
     public String postEditFaq(Model model,
                               @RequestParam("editQuestion") String question,
                               @RequestParam("editAnswer") String answer,
-                              @RequestParam("id") Long id) {
+                              @RequestParam(ID) Long id) {
+
         faqService.editFaq(id, question, answer);
+
         log.info(question);
         log.info(answer);
         log.info("" + id);
-        List<FAQ> faqs = faqService.getFaqs();
-        model.addAttribute("faqs", faqs);
-        model.addAttribute("editMode", false);
-        model.addAttribute("id", id);
+
+        model.addAttribute(FAQS, faqService.getFaqs());
+        model.addAttribute(EDIT_MODE, false);
+        model.addAttribute(ID, id);
+
         return "admin-faq";
     }
 
     @GetMapping(value = "/admin/faq/delete/{id}")
-    public String deleteFaq(Model model,
-                            @PathVariable("id") Long id
-    ) {
+    public String deleteFaq(Model model, @PathVariable(ID) Long id) {
         faqService.deleteById(id);
         log.info(id + "");
-        List<FAQ> faqs = faqService.getFaqs();
-        model.addAttribute("faqs", faqs);
-        model.addAttribute("editMode", false);
+
+        model.addAttribute(FAQS, faqService.getFaqs());
+        model.addAttribute(EDIT_MODE, false);
+        model.addAttribute("deletePath", true);
+
         return "admin-faq";
     }
 
@@ -193,27 +204,33 @@ public class AdminController {
     @GetMapping("/admin/feedback/{pageNum}")
     public String getAdminFeedback(Model model, @PathVariable("pageNum") int pageNum) {
         Page<Message> pageContacts = contactService.contacts(pageNum);
-        List<Message> messages = pageContacts.getContent();
-        model.addAttribute("messages", messages);
-        model.addAttribute("currentPage", pageNum);
-        model.addAttribute("totalPages", pageContacts.getTotalPages());
-        model.addAttribute("totalItems", pageContacts.getTotalElements());
+
+        model.addAttribute("messages", pageContacts.getContent());
+        model.addAttribute(CURRENT_PAGE, pageNum);
+        model.addAttribute(TOTAL_PAGES, pageContacts.getTotalPages());
+        model.addAttribute(TOTAL_ITEMS, pageContacts.getTotalElements());
+
         return "admin-feedback";
     }
 
     @GetMapping("/admin/feedback/{pageNum}/delete/{id}")
-    public String deleteContact(Model model, @PathVariable("id") Long id, @PathVariable("pageNum") int pageNum) {
+    public String deleteContact(Model model, @PathVariable(ID) Long id, @PathVariable("pageNum") int pageNum) {
         contactService.deleteById(id);
+
         Page<Message> pageContacts = contactService.contacts(pageNum);
         List<Message> messages = pageContacts.getContent();
+
         if (messages.isEmpty() && pageNum != 1) {
             pageContacts = contactService.contacts(pageNum - 1);
             messages = pageContacts.getContent();
         }
+
         model.addAttribute("messages", messages);
-        model.addAttribute("currentPage", pageNum);
-        model.addAttribute("totalPages", pageContacts.getTotalPages());
-        model.addAttribute("totalItems", pageContacts.getTotalElements());
+        model.addAttribute(CURRENT_PAGE, pageNum);
+        model.addAttribute(TOTAL_PAGES, pageContacts.getTotalPages());
+        model.addAttribute(TOTAL_ITEMS, pageContacts.getTotalElements());
+        model.addAttribute("deletePath", true);
+
         return "admin-feedback";
     }
 
@@ -225,11 +242,12 @@ public class AdminController {
     @GetMapping("/admin/products/{pageNum}")
     public String getAdminProducts(Model model, @PathVariable("pageNum") int pageNum) {
         Page<Product> pageProducts = filterProducts.getAllProducts(pageNum);
-        List<Product> products = pageProducts.getContent();
-        model.addAttribute("products", products);
-        model.addAttribute("currentPage", pageNum);
-        model.addAttribute("totalPages", pageProducts.getTotalPages());
-        model.addAttribute("totalItems", pageProducts.getTotalElements());
+
+        model.addAttribute("products", pageProducts.getContent());
+        model.addAttribute(CURRENT_PAGE, pageNum);
+        model.addAttribute(TOTAL_PAGES, pageProducts.getTotalPages());
+        model.addAttribute(TOTAL_ITEMS, pageProducts.getTotalElements());
+
         return "admin-products";
     }
 
@@ -242,24 +260,31 @@ public class AdminController {
         } catch (NumberFormatException e) {
             products = filterProducts.searchUncertainProducts(search);
         }
+
         model.addAttribute("products", products);
-        model.addAttribute("currentPage", 1);
+        model.addAttribute(CURRENT_PAGE, 1);
+
         return "admin-products";
     }
 
     @GetMapping("/admin/products/{pageNum}/delete/{id}")
-    public String deleteProduct(Model model, @PathVariable("id") Long id, @PathVariable("pageNum") int pageNum) {
+    public String deleteProduct(Model model, @PathVariable(ID) Long id, @PathVariable("pageNum") int pageNum) {
         filterProducts.deleteById(id);
+
         Page<Product> pageProducts = filterProducts.getAllProducts(pageNum);
         List<Product> products = pageProducts.getContent();
+
         if (products.isEmpty() && pageNum != 1) {
             pageProducts = filterProducts.getAllProducts(pageNum - 1);
             products = pageProducts.getContent();
         }
+
         model.addAttribute("products", products);
-        model.addAttribute("currentPage", pageNum);
-        model.addAttribute("totalPages", pageProducts.getTotalPages());
-        model.addAttribute("totalItems", pageProducts.getTotalElements());
+        model.addAttribute(CURRENT_PAGE, pageNum);
+        model.addAttribute(TOTAL_PAGES, pageProducts.getTotalPages());
+        model.addAttribute(TOTAL_ITEMS, pageProducts.getTotalElements());
+        model.addAttribute("deletePath", true);
+
         return "admin-products";
     }
 
@@ -271,25 +296,29 @@ public class AdminController {
     @GetMapping("/admin/reviews/{pageNum}")
     public String getAdminReviews(Model model, @PathVariable("pageNum") int pageNum) {
         Page<Review> pagesReviews = reviewService.getAll(pageNum);
-        List<Review> reviews = pagesReviews.getContent();
-        model.addAttribute("reviews", reviews);
-        model.addAttribute("currentPage", pageNum);
-        model.addAttribute("totalPages", pagesReviews.getTotalPages());
-        model.addAttribute("totalItems", pagesReviews.getTotalElements());
+
+        model.addAttribute("reviews", pagesReviews.getContent());
+        model.addAttribute(CURRENT_PAGE, pageNum);
+        model.addAttribute(TOTAL_PAGES, pagesReviews.getTotalPages());
+        model.addAttribute(TOTAL_ITEMS, pagesReviews.getTotalElements());
+
         return "admin-reviews";
     }
 
     @GetMapping("/admin/addProduct")
     public String addProduct(Model model) {
+        model.addAttribute("generalProduct", new Product());
         return "add-product";
     }
 
     @GetMapping("/admin/editProduct/{id}")
-    public String editProduct(Model model, @PathVariable("id") Long id, HttpServletRequest request) {
+    public String editProduct(Model model, @PathVariable(ID) Long id, HttpServletRequest request) {
         Product product = filterProducts.getProductById(id);
         request.getSession().setAttribute("productEdit", product);
+
         model.addAttribute("product", product);
-        model.addAttribute("editMode", true);
+        model.addAttribute(EDIT_MODE, true);
+
         return "add-product";
     }
 
@@ -301,10 +330,11 @@ public class AdminController {
                            @RequestParam("price") String stringPrice,
                            @RequestParam("payment") String payment,
                            @RequestParam("warranty") Integer warranty,
-                           @RequestParam("available") boolean available,
+                           @RequestParam(value = "available", required = false) boolean available,
                            @RequestParam(value = "gifts", required = false) String gifts,
                            @RequestParam(value = "discount", required = false) int discount,
                            @RequestParam("link") String link) {
+
         Product product = (Product) request.getSession().getAttribute("productEdit");
         product.setName(name);
         product.setCategory(filterProducts.getCategory(category));
@@ -334,6 +364,7 @@ public class AdminController {
                                  @RequestParam(value = "discount", required = false) int discount,
                                  @RequestParam("link") String link
     ) {
+
         stringPrice = stringPrice.replace(" ", "");
         stringPrice = stringPrice.replace(",", ".");
         int price;
@@ -349,27 +380,25 @@ public class AdminController {
         switch (category) {
             case "Phones": {
                 Map<String, List<String>> phoneFilters = phoneService.getPhoneCharacteristics();
-                Set<String> keys = phoneFilters.keySet();
-                model.addAttribute("keys", keys);
+                model.addAttribute(KEYS, phoneFilters.keySet());
                 model.addAttribute("phoneFilters", phoneFilters);
                 break;
             }
             case "Laptops": {
                 Map<String, List<String>> laptopFilters = laptopService.getLaptopCharacteristics();
-                Set<String> keys = laptopFilters.keySet();
-                model.addAttribute("keys", keys);
+                model.addAttribute(KEYS, laptopFilters.keySet());
                 model.addAttribute("laptopFilters", laptopFilters);
                 break;
             }
             case "Watches": {
                 Map<String, List<String>> watchFilters = watchService.getWatchCharacteristics();
-                Set<String> keys = watchFilters.keySet();
-                model.addAttribute("keys", keys);
+                model.addAttribute(KEYS, watchFilters.keySet());
                 model.addAttribute("watchFilters", watchFilters);
                 break;
             }
         }
         model.addAttribute("category", category);
+
         return "add-certain-product";
     }
 
@@ -391,10 +420,11 @@ public class AdminController {
                             @RequestParam("frontC") String frontC,
                             @RequestParam("battery") String battery
     ) {
+
         Product product = (Product) request.getSession().getAttribute("product");
-        boolean ram_slotB = !ram_slot.contains("doesn't");
-        boolean NFC = !nfc.contains("doesn't");
-        boolean wc = !wireless_charger.contains("doesn't");
+        boolean ram_slotB = !ram_slot.contains(AVAILABLE_FUNCTION);
+        boolean NFC = !nfc.contains(AVAILABLE_FUNCTION);
+        boolean wc = !wireless_charger.contains(AVAILABLE_FUNCTION);
         Phone phone = new Phone(product.getImage(), product.getName(), product.getPrice(), product.getBrand(),
                 product.getPayment(), product.getRating(), product.getDiscount(), product.getGifts(), product.getAvailable(),
                 product.getWarranty(), Date.from(Instant.now()), product.getSold(), product.getCategory(), series,
@@ -402,6 +432,7 @@ public class AdminController {
                 battery, wc, Integer.valueOf(cores), Integer.valueOf(screen_refresh));
         phoneService.savePhone(phone);
         request.removeAttribute("product");
+
         return getAdminFirstProducts(model);
     }
 
@@ -422,8 +453,7 @@ public class AdminController {
                              @RequestParam("Color") String color,
                              @RequestParam("Video size") String video_size,
                              @RequestParam("Processor manufacturer") String processorManufacturers,
-                             @RequestParam("weight") String weight
-    ) {
+                             @RequestParam("weight") String weight) {
         Product product = (Product) request.getSession().getAttribute("product");
 
         Laptop laptop = new Laptop(product.getImage(), product.getName(), product.getPrice(), product.getBrand(),
@@ -434,6 +464,7 @@ public class AdminController {
                 "", color, video_size, "", "", Float.valueOf(weight), false);
         laptopService.saveLaptop(laptop);
         request.removeAttribute("product");
+
         return getAdminFirstProducts(model);
     }
 
@@ -451,17 +482,16 @@ public class AdminController {
                             @RequestParam("Working hours") String working_hours,
                             @RequestParam("Display diagonal") String display_diagonal,
                             @RequestParam("Touch screen") String touch_sc,
-                            @RequestParam("purpose") String purpose
-    ) {
+                            @RequestParam("purpose") String purpose) {
         Product product = (Product) request.getSession().getAttribute("product");
 
-        boolean touch_screen = touch_sc.contains("doesn't");
-        boolean wp = !waterproof.contains("doesn't");
-        boolean cs = !call_support.contains("doesn't");
-        boolean mc = !music_control.contains("doesn't");
-        boolean pm = !pulse_measurement.contains("doesn't");
-        boolean sc = !step_counting.contains("doesn't");
-        boolean sm = !sleep_monitoring.contains("doesn't");
+        boolean touch_screen = touch_sc.contains(AVAILABLE_FUNCTION);
+        boolean wp = !waterproof.contains(AVAILABLE_FUNCTION);
+        boolean cs = !call_support.contains(AVAILABLE_FUNCTION);
+        boolean mc = !music_control.contains(AVAILABLE_FUNCTION);
+        boolean pm = !pulse_measurement.contains(AVAILABLE_FUNCTION);
+        boolean sc = !step_counting.contains(AVAILABLE_FUNCTION);
+        boolean sm = !sleep_monitoring.contains(AVAILABLE_FUNCTION);
 
         Watch watch = new Watch(product.getImage(), product.getName(), product.getPrice(), product.getBrand(),
                 product.getPayment(), product.getRating(), product.getDiscount(), product.getGifts(), product.getAvailable(),
@@ -470,35 +500,41 @@ public class AdminController {
 
         watchService.saveWatch(watch);
         request.removeAttribute("product");
+
         return getAdminFirstProducts(model);
     }
 
     @GetMapping(value = "/admin/reviews/{pageNum}/delete/{id}")
-    public String deleteReview(Model model,
-                               @PathVariable("id") Long id, @PathVariable("pageNum") int pageNum) {
+    public String deleteReview(Model model, @PathVariable(ID) Long id, @PathVariable("pageNum") int pageNum) {
         reviewService.deleteById(id);
+
         Page<Review> pagesReviews = reviewService.getAll(pageNum);
         List<Review> reviews = pagesReviews.getContent();
+
         if (reviews.isEmpty() && pageNum != 1) {
             pagesReviews = reviewService.getAll(pageNum - 1);
             reviews = pagesReviews.getContent();
         }
+
         model.addAttribute("reviews", reviews);
-        model.addAttribute("currentPage", pageNum);
-        model.addAttribute("totalPages", pagesReviews.getTotalPages());
-        model.addAttribute("totalItems", pagesReviews.getTotalElements());
+        model.addAttribute(CURRENT_PAGE, pageNum);
+        model.addAttribute(TOTAL_PAGES, pagesReviews.getTotalPages());
+        model.addAttribute(TOTAL_ITEMS, pagesReviews.getTotalElements());
+        model.addAttribute("deletePath", true);
+
         return "admin-reviews";
     }
 
     @PostMapping("/admin/reviews")
     public String searchReviews(Model model, @RequestParam("search") String searchKey) {
-        List<Review> reviews = null;
+        List<Review> reviews;
         try {
             reviews = reviewService.findReviewsByProduct(Long.valueOf(searchKey));
         } catch (NumberFormatException e) {
             reviews = reviewService.findReviewsByUser(searchKey);
         }
         model.addAttribute("reviews", reviews);
+
         return "admin-reviews";
     }
 
@@ -525,8 +561,8 @@ public class AdminController {
                                    @RequestParam("banner12") String banner12, @RequestParam("banner13") String banner13,
                                    @RequestParam("banner21") String banner21, @RequestParam("banner22") String banner22,
                                    @RequestParam("banner23") String banner23,
-                                   @RequestParam("productId1") Long productId1, @RequestParam("productId2") Long productId2
-                                   ) {
+                                   @RequestParam("productId1") Long productId1, @RequestParam("productId2") Long productId2) {
+
         model.addAttribute("link1", link1);
         model.addAttribute("link2", link2);
         model.addAttribute("banner11", banner11);
@@ -537,6 +573,7 @@ public class AdminController {
         model.addAttribute("banner23", banner23);
         model.addAttribute("productId1", productId1);
         model.addAttribute("productId2", productId2);
+
         return "admin-home";
     }
 }

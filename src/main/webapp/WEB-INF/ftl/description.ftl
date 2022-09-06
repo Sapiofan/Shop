@@ -378,7 +378,7 @@
                     </div>
                     <div class="comment-container">
                         <div class="date-check">
-                            <p class="date">${review.date}</p>
+                            <p class="date">${review.date?string('dd.MM.yyyy HH:mm')}</p>
                             <#if review.recommended>
                                 <div class="recommend">
                                     <img src="./../${img}/check.png" width="16px" height="16px">
@@ -410,6 +410,12 @@
                                 <label for="star1" title="text">1 star</label>
                             </div>
                         </div>
+                        <#assign user_name = "">
+                        <#if user?has_content>
+                            <#assign user_name = user.name>
+                        </#if>
+                        <input type="text" name="name" value="${user_name}"
+                               class="rev-input name-input" placeholder="Your name" required>
                         <textarea class="rev-input" type="text" name="review" placeholder="Your review"
                                   required></textarea>
                         <label class="container1">I recommend this product
@@ -431,8 +437,8 @@
 <script src="${js}/general.js"></script>
 <script>
     window.onload = ev => {
-        let reviewExists = "${reviewExists!""}"
-        if (reviewExists) {
+        let reviewExists = "${reviewExists?string}"
+        if (reviewExists === "true") {
             alert("Sorry, but you have already sent a review for this product")
         }
     }

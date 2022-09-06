@@ -88,7 +88,10 @@ public class ReviewServiceImpl implements ReviewService {
     @Override
     @Transactional
     public void deleteById(Long id) {
-        log.warn("Review was deleted: " + reviewRepository.findReviewById(id));
+        Review review = reviewRepository.findReviewById(id);
+        log.warn("Review was deleted: " + review);
+        calculateRecommended(review.getProduct().getReviews());
+
         reviewRepository.deleteById(id);
     }
 
@@ -110,7 +113,10 @@ public class ReviewServiceImpl implements ReviewService {
             counter += review.getRating();
         }
 
-        product.setRating(counter / reviews.size());
+        product.setRating(0f);
+        if(reviews.size() != 0) {
+            product.setRating(counter / reviews.size());
+        }
         productRepository.save(product);
 
         return count * 100 / reviews.size();

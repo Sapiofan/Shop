@@ -25,6 +25,10 @@
 
     <#assign css = "./../../static/css">
 
+    <#if deletePath??>
+        <#assign css = "./../../../../static/css">
+    </#if>
+
     <link rel="stylesheet" type="text/css" href="<@spring.url '${css}/general.css'/>"/>
     <link rel="stylesheet" type="text/css" href="<@spring.url '${css}/admin.css'/>"/>
 </head>

@@ -1,9 +1,10 @@
 <#import "spring.ftl" as spring>
+<#setting number_format="computer">
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Smart shop | Product actiions</title>
+    <title>Smart shop | Product actions</title>
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
 
     <meta
@@ -21,6 +22,9 @@
           href="https://ru.seaicons.com/wp-content/uploads/2015/10/Flat-TV-icon.png">
 
     <#assign css = "./../static/css">
+    <#if editMode??>
+        <#assign css = "./../../static/css">
+    </#if>
 
     <link rel="stylesheet" type="text/css" href="<@spring.url '${css}/general.css'/>"/>
     <link rel="stylesheet" type="text/css" href="<@spring.url '${css}/admin.css'/>"/>
@@ -29,7 +33,7 @@
 <body>
 <#include "admin-header.ftl">
 <main class="main">
-    <form action="/admin/addProduct" method="post">
+    <form action="/admin/addProduct" method="post" name="generalProduct">
         <div class="big-group">
             <div class="input-group">
                 <p>Name</p>
@@ -54,10 +58,13 @@
                     <#assign image = product.image>
                     <#assign available = product.available>
                 </#if>
+<#--                <@spring.formInput "generalProduct.name" "required value='${name}'"/>-->
                 <input name="name" value="${name}" type="text" required>
             </div>
             <div class="input-group">
                 <p>Category</p>
+<#--                <#assign options = ['Phones', 'Laptops', 'Watches']>-->
+<#--                <@spring.formSingleSelect "generalProduct.category", options, "required class='categories'" />-->
                 <select name="category" class="categories" id="categories">
                     <option value="Phones" selected>Phones</option>
                     <option value="Laptops">Laptops</option>
@@ -66,30 +73,36 @@
             </div>
             <div class="input-group">
                 <p>Brand</p>
+<#--                <@spring.formInput "generalProduct.brand" "required value='${brand}'"/>-->
                 <input name="brand" value="${brand}" type="text" required>
             </div>
         </div>
         <div class="big-group">
             <div class="input-group">
                 <p>Price</p>
+<#--                <@spring.formInput "generalProduct.price" "required value='${price}'"/>-->
                 <input name="price" value="${price}" type="number" required>
             </div>
             <div class="input-group">
                 <p>Payment</p>
+<#--                <@spring.formInput "generalProduct.payment" "required value='${payment}'"/>-->
                 <input name="payment" value="${payment}" type="text" required>
             </div>
             <div class="input-group">
                 <p>Warranty</p>
+<#--                <@spring.formInput "generalProduct.warranty" "required value='${warranty}' type='number'"/>-->
                 <input name="warranty" value="${warranty}" type="number" required>
             </div>
         </div>
         <div class="big-group">
             <div class="input-group">
                 <label class="container1">
-                    <#if available>
+                    <#if available??>
+<#--                        <@spring.formInput "generalProduct.available" "checked type='checkbox'"/>-->
                         <input name="available" type="checkbox" checked>
                     </#if>
-                    <#if !available>
+                    <#if !available??>
+<#--                        <@spring.formInput "generalProduct.available" " type='checkbox'"/>-->
                         <input name="available" type="checkbox">
                     </#if>
                     <span class="checkmark"></span>
@@ -101,18 +114,22 @@
             <div class="input-group">
                 <p>Gifts</p>
                 <#if !editMode??>
+<#--                    <@spring.formInput "generalProduct.gifts" "required value='none'"/>-->
                     <input name="gifts" value="none" type="text">
                 </#if>
                 <#if editMode??>
+<#--                    <@spring.formInput "generalProduct.gifts" "required value='${gifts}'"/>-->
                     <input value="${gifts}" name="gifts" type="text">
                 </#if>
             </div>
             <div class="input-group">
                 <p>Discount (%)</p>
                 <#if !editMode??>
+<#--                    <@spring.formInput "generalProduct.discount" "required value='0' type='number'"/>-->
                     <input name="discount" value="0" type="number">
                 </#if>
                 <#if editMode??>
+<#--                    <@spring.formInput "generalProduct.discount" "required value='${discount}' type='number'"/>-->
                     <input value="${discount}" name="discount" type="number">
                 </#if>
             </div>
@@ -120,6 +137,7 @@
         <div class="big-group">
             <div class="input-group">
                 <p>Image link</p>
+<#--                <@spring.formInput "generalProduct.image" "required value='${image}' style='width: 34vw;'"/>-->
                 <input value="${image}" name="link" type="text" style="width: 34vw" required>
             </div>
         </div>

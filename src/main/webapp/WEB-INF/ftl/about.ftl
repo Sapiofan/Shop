@@ -66,41 +66,38 @@
     <section id="career">
         <h2>Careers</h2>
         <p class="postings">Check out our job postings & opportunities waiting for you</p>
-        <form action="/about" method="post" class="career-form">
+        <form action="/about" method="post" class="career-form" name="careerForm">
             <div class="input-blocks">
                 <div class="about-input-block">
                     <p>First Name</p>
-                    <input name="fname" type="text" class="input" required>
+                    <@spring.formInput "careerForm.first_name" "required class='input'"/>
                 </div>
                 <div class="about-input-block">
                     <p>Last Name</p>
-                    <input name="lname" type="text" class="input" required>
+                    <@spring.formInput "careerForm.last_name" "required class='input'"/>
                 </div>
             </div>
             <div class="input-blocks">
                 <div class="about-input-block">
                     <p>Email *</p>
-                    <input name="email" type="email" class="input" required/>
+                    <@spring.formInput "careerForm.email" "required class='input'"/>
                 </div>
                 <div class="about-input-block">
                     <p>Phone</p>
-                    <input name="phone" type="text" class="input" required>
+                    <@spring.formInput "careerForm.phone" "required class='input'"/>
                 </div>
             </div>
             <div class="input-blocks">
                 <div class="about-input-block">
                     <p>Position You Apply For</p>
-                    <select name="pos" class="input" id="positions">
-                        <option value="In-store Sales">In-store Sales</option>
-                        <option value="Store Leadership">Store Leadership</option>
-                        <option value="In-store Operations">In-store Operations</option>
-                        <option value="Wearhouse & Logistics">Wearhouse & Logistics</option>
-                        <option value="eCommerce">eCommerce</option>
-                    </select>
+                    <#assign options = ['In-store Sales', 'Store Leadership', 'Wearhouse & Logistics',
+                    'In-store Operations', 'eCommerce']>
+                    <@spring.formSingleSelect "careerForm.position", options, "required class='input'" />
+
                 </div>
                 <div class="about-input-block">
                     <p>Link to Resume</p>
-                    <input name="link" type="text" class="input" required>
+                    <@spring.formInput "careerForm.link" "required class='input'"/>
                 </div>
             </div>
             <input type="submit" value="Submit" class="submit">
