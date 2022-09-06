@@ -72,6 +72,9 @@ public class MainController {
     private WatchService watchService;
 
     @Autowired
+    private CartService cartService;
+
+    @Autowired
     private FindMaxProduct utils;
 
     private static final Logger log = LoggerFactory.getLogger(MainController.class);
@@ -412,7 +415,7 @@ public class MainController {
     }
 
     @PostMapping(value = {"/checkout", "/checkout/{id}"})
-    public String pay(Model model,
+    public String pay(Model model, Authentication authentication,
                       @RequestParam("name") String name,
                       @RequestParam("phone1") String phone1,
                       @RequestParam("phone2") String phone2,
@@ -433,6 +436,9 @@ public class MainController {
         String date = date1 + "/" + date2;
         Transaction transaction = transactionService.addNewTransaction(name, phone, email, city, card,
                 date, cvv, Integer.valueOf(total.substring(0, total.length() - 1)));
+
+        cartService.cleanCart(authentication);
+
         model.addAttribute("transaction", transaction);
 
         return "success";

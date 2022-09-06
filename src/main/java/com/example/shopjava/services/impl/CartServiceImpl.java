@@ -1,5 +1,7 @@
 package com.example.shopjava.services.impl;
 
+import com.example.shopjava.configs.security.CustomUserDetailsService;
+import com.example.shopjava.entities.user.User;
 import com.example.shopjava.entities.user.cart.Cart;
 import com.example.shopjava.entities.user.cart.CartProduct;
 import com.example.shopjava.entities.product.Product;
@@ -8,9 +10,11 @@ import com.example.shopjava.repos.CartRepo;
 import com.example.shopjava.repos.ProductRepo;
 import com.example.shopjava.services.CartService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.HashSet;
 
 @Service
 public class CartServiceImpl implements CartService {
@@ -23,6 +27,9 @@ public class CartServiceImpl implements CartService {
 
     @Autowired
     private CartProductRepo cartProductRepo;
+
+    @Autowired
+    private CustomUserDetailsService userService;
 
     @Override
     @Transactional
@@ -77,5 +84,16 @@ public class CartServiceImpl implements CartService {
         cart.setTotalPrice(cart.getTotalPrice() - cartProduct.getTotal());
         cartRepository.save(cart);
         cartProductRepo.delete(cartProduct);
+    }
+
+    @Override
+    public void cleanCart(Authentication authentication) {
+        if(authentication == null) {
+            return;
+        }
+
+        User user = userService.getUserByEmail(authentication.getName());
+        user.setCart(new Cart(0, 0));
+        userService.saveUser(user);
     }
 }
