@@ -32,7 +32,13 @@
 <jsp:include page="header.jsp"/>
 <main class="main">
     <form action="/${fn:toLowerCase(category)}" method="post" class="filters-blocks">
-        <h1>${category}</h1>
+        <c:if test="${!hasAsideMenu}">
+            <h1>${category}</h1>
+        </c:if>
+        <c:if test="${hasAsideMenu}">
+            <input type="hidden" value="${searchKey}" name="searchKey">
+            <h1></h1>
+        </c:if>
         <article>
             <c:if test="${hasAsideMenu}">
                 <div class="aside" id="filters">

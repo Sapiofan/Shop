@@ -142,6 +142,26 @@ public class MainController {
         model.addAttribute(PRODUCTS, filterProducts.searchProducts(searchKey));
         model.addAttribute(SEARCH_KEY, searchKey);
         model.addAttribute(HAS_ASIDE_MENU, true);
+        model.addAttribute(CATEGORY, "Searching");
+
+        return FILTERS_PAGE;
+    }
+
+    @PostMapping("/searching")
+    public String sortSearchResult(Model model, @RequestParam("searchKey") String searchKey,
+                                   @RequestParam("sort") String sortType, Authentication authentication) {
+
+        if (utils.checkAuth(authentication)) {
+            model.addAttribute(IS_AUTHENTICATED, true);
+        }
+
+        getUserPreferences(model, authentication);
+
+        model.addAttribute(PRODUCTS, filterProducts.sort(filterProducts.searchProducts(searchKey), sortType));
+        model.addAttribute(SEARCH_KEY, searchKey);
+        model.addAttribute(HAS_ASIDE_MENU, true);
+        model.addAttribute(CATEGORY, "Searching");
+        model.addAttribute(SORT_TYPE, sortType);
 
         return FILTERS_PAGE;
     }

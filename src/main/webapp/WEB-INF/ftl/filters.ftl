@@ -36,7 +36,13 @@
 <#include "header.ftl">
 <main class="main">
     <form action="/${category?lower_case}" method="post" class="filters-blocks">
-        <h1>${category}</h1>
+        <#if !hasAsideMenu??>
+            <h1>${category}</h1>
+        </#if>
+        <#if hasAsideMenu??>
+            <input type="hidden" value="${searchKey}" name="searchKey">
+            <h1></h1>
+        </#if>
         <article>
             <#if hasAsideMenu??>
                 <div class="aside" id="filters">
