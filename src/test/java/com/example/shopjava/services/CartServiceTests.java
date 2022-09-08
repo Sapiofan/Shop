@@ -15,6 +15,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -73,9 +74,16 @@ public class CartServiceTests {
         user.setId(1l);
         user.setName("name");
 
+        CartProduct product = new CartProduct();
+        product.setId(1l);
+
+        CartProduct product2 = new CartProduct();
+        product2.setId(2l);
+
         Cart cart = new Cart();
         cart.setId(1l);
         cart.setUser(user);
+        cart.setCartProducts(new HashSet<>(Arrays.asList(product, product2)));
 
         when(cartRepository.findProductsByUser(1l)).thenReturn(cart);
 
@@ -86,6 +94,7 @@ public class CartServiceTests {
         Assertions.assertAll(() -> {
             assertEquals("name", cart1.getUser().getName());
             assertEquals(1l, cart1.getId());
+            assertEquals(2, cart1.getCartProducts().size());
         });
     }
 

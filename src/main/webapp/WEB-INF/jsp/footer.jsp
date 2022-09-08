@@ -31,7 +31,7 @@
                 <a href="/discounts">
                     <li>Discounts</li>
                 </a>
-                <a href="#">
+                <a href="/bestsellers">
                     <li>Bestsellers</li>
                 </a>
                 <a href="#">

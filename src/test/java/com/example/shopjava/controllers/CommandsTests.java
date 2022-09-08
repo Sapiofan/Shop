@@ -1,27 +1,15 @@
 package com.example.shopjava.controllers;
 
-import com.example.shopjava.controllers.MainController;
-import com.example.shopjava.entities.user.cart.CartProduct;
-import io.cucumber.junit.Cucumber;
-import io.cucumber.junit.CucumberOptions;
-import io.cucumber.spring.CucumberContextConfiguration;
-import org.junit.jupiter.api.*;
-import org.junit.runner.RunWith;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.junit.jupiter.api.MethodOrderer;
+import org.junit.jupiter.api.Order;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestMethodOrder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.MvcResult;
-import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
-
-import java.nio.charset.Charset;
-import java.nio.charset.StandardCharsets;
-import java.util.List;
 
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
@@ -42,14 +30,13 @@ public class CommandsTests {
     @Autowired
     private MockMvc mvc;
 
-    static MvcResult mvcResult;
+    private final MediaType mediaType = new MediaType(MediaType.APPLICATION_JSON.getType(),
+            MediaType.APPLICATION_JSON.getSubtype());
 
     @Test
     @Order(1)
     public void addFavoriteTest() throws Exception {
-        MediaType mediaType = new MediaType(MediaType.APPLICATION_JSON.getType(),
-                MediaType.APPLICATION_JSON.getSubtype());
-        mvcResult = this.mvc.perform(get("/addProduct/1"))
+        this.mvc.perform(get("/addProduct/1"))
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(authenticated())
@@ -60,8 +47,6 @@ public class CommandsTests {
     @Test
     @Order(2)
     public void deleteFavoriteTest() throws Exception {
-        MediaType mediaType = new MediaType(MediaType.APPLICATION_JSON.getType(),
-                MediaType.APPLICATION_JSON.getSubtype());
         this.mvc.perform(get("/deleteFavorite/1"))
                 .andDo(print())
                 .andExpect(status().isOk())
@@ -73,8 +58,6 @@ public class CommandsTests {
     @Test
     @Order(3)
     public void addToCartTest() throws Exception {
-        MediaType mediaType = new MediaType(MediaType.APPLICATION_JSON.getType(),
-                MediaType.APPLICATION_JSON.getSubtype());
         this.mvc.perform(get("/addToCart/1"))
                 .andDo(print())
                 .andExpect(status().isOk())
@@ -86,8 +69,6 @@ public class CommandsTests {
     @Test
     @Order(4)
     public void increaseQuantityTest() throws Exception {
-        MediaType mediaType = new MediaType(MediaType.APPLICATION_JSON.getType(),
-                MediaType.APPLICATION_JSON.getSubtype());
         this.mvc.perform(get("/addAdditionalProduct/1"))
                 .andDo(print())
                 .andExpect(status().isOk())
@@ -100,8 +81,6 @@ public class CommandsTests {
     @Test
     @Order(5)
     public void decreaseQuantityTest() throws Exception {
-        MediaType mediaType = new MediaType(MediaType.APPLICATION_JSON.getType(),
-                MediaType.APPLICATION_JSON.getSubtype());
         this.mvc.perform(get("/subtractAdditionalProduct/1"))
                 .andDo(print())
                 .andExpect(status().isOk())
@@ -114,8 +93,6 @@ public class CommandsTests {
     @Test
     @Order(6)
     public void deleteFomCartTest() throws Exception {
-        MediaType mediaType = new MediaType(MediaType.APPLICATION_JSON.getType(),
-                MediaType.APPLICATION_JSON.getSubtype());
         this.mvc.perform(get("/deleteCartProduct/1"))
                 .andDo(print())
                 .andExpect(status().isOk())
@@ -127,8 +104,6 @@ public class CommandsTests {
     @Test
     @Order(7)
     public void cleanWishlistTest() throws Exception {
-        MediaType mediaType = new MediaType(MediaType.APPLICATION_JSON.getType(),
-                MediaType.APPLICATION_JSON.getSubtype());
         this.mvc.perform(get("/cleanWishlist"))
                 .andDo(print())
                 .andExpect(status().isOk())

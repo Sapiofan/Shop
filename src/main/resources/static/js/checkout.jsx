@@ -28,7 +28,7 @@ class Checkout extends React.Component {
         };
 
         this.handleInputChange = this.handleInputChange.bind(this);
-        // this.handleCard = this.handleCard.bind(this);
+        this.handleCard = this.handleCard.bind(this);
         this.handleData = this.handleData.bind(this);
         this.setInputRef = this.setInputRef.bind(this);
 
@@ -51,14 +51,14 @@ class Checkout extends React.Component {
         });
     }
 
-    // handleCard() {
-    //     if (!this.state.data)
-    //         this.setState({data: true})
-    //     else {
-    //         this.setState({data: false})
-    //     }
-    //
-    // }
+    handleCard() {
+        if (!this.state.data)
+            this.setState({data: true})
+        else {
+            this.setState({data: false})
+        }
+
+    }
 
     handleData() {
         this.setState({cardInput: true})

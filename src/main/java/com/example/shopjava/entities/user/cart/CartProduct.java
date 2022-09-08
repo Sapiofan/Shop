@@ -81,11 +81,12 @@ public class CartProduct {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         CartProduct that = (CartProduct) o;
-        return Objects.equals(cart, that.cart) && Objects.equals(product, that.product);
+        return Objects.equals(id, that.id) && Objects.equals(cart, that.cart) && Objects.equals(product, that.product)
+                && Objects.equals(quantity, that.quantity) && Objects.equals(total, that.total);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(cart, product);
+        return Objects.hash(id, cart, product, quantity, total);
     }
 }
