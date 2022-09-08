@@ -819,6 +819,7 @@ html {
 
 .recommend {
     display: flex;
+    position: relative;
     /*float: right;*/
 }
 
@@ -1055,7 +1056,8 @@ html {
     }
 
     .recommend {
-        margin: 10px 0;
+        margin: 20px 0;
         float: left;
+        position: absolute;
     }
 }
