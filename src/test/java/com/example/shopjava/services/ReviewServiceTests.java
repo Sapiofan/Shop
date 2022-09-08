@@ -93,6 +93,9 @@ public class ReviewServiceTests {
         Review review1 = new Review();
         review1.setReview("review");
         review1.setId(1l);
+        review1.setProduct(new Product());
+        review1.setRecommended(true);
+        review1.setRating(5);
 
         when(reviewRepository.findReviewById(1l)).thenReturn(review1);
 
