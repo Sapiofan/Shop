@@ -7,7 +7,7 @@
         <c:if test="${isAuthenticated}">
             <form action="/" method="post">
                 <button type="submit" name="logout" class="user menu-item">
-                    <img src="/img/user.png" style="width: 30px; height: 30px;">
+                    <img src="img/user.png" style="width: 30px; height: 30px;">
                     <p>Logout</p>
                 </button>
             </form>
@@ -15,14 +15,14 @@
         <c:if test="${!isAuthenticated}">
                 <button onclick="document.getElementById('login').style.display='block'"
                         class="user menu-item">
-                    <img src="/img/user.png" style="width: 30px; height: 30px;">
+                    <img src="img/user.png" style="width: 30px; height: 30px;">
                     <p>Sign in</p>
                 </button>
         </c:if>
         <c:if test="${isAuthenticated}">
             <button id="header-heart" onclick="document.getElementById('likes').style.display='block'"
                     class="likes menu-item">
-                <img src="/img/heart (2).png" style="width: 30px; height: 30px;">
+                <img src="img/heart (2).png" style="width: 30px; height: 30px;">
                 <p>Favorites</p>
             </button>
         </c:if>

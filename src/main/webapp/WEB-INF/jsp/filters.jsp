@@ -1,6 +1,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <%@ taglib prefix = "fmt" uri = "http://java.sun.com/jsp/jstl/fmt" %>
+<%@page contentType="text/html; charset=UTF-8" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -21,8 +22,8 @@
     />
     <link rel="icon"
           href="https://ru.seaicons.com/wp-content/uploads/2015/10/Flat-TV-icon.png">
-    <link rel="stylesheet" href="/css/filters.css">
-    <link rel="stylesheet" href="/css/general.css">
+    <link rel="stylesheet" href="css/filters.css">
+    <link rel="stylesheet" href="css/general.css">
     <link rel="stylesheet" src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"/>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
@@ -159,7 +160,7 @@
                     <div class="filters-icon">
                         <button type="button" onclick="document.getElementById('filters').style.display='block';
                             document.body.style.overflowY = 'hidden';">
-                            <img src="/img/filter-_2_.svg">
+                            <img src="img/filter-_2_.svg">
                         </button>
                     </div>
                 </div>
@@ -242,8 +243,8 @@
     </form>
 </main>
 <jsp:include page="footer.jsp"/>
-<script src="/js/general.js"></script>
-<script src="/js/filters.js"></script>
+<script src="js/general.js"></script>
+<script src="js/filters.js"></script>
 </body>
 
 <script>

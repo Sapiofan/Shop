@@ -18,7 +18,7 @@
     />
     <link rel="icon"
           href="https://ru.seaicons.com/wp-content/uploads/2015/10/Flat-TV-icon.png">
-    <link rel="stylesheet" href="/css/success.css">
+    <link rel="stylesheet" href="css/success.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"/>
 
@@ -34,7 +34,7 @@
     <div class="success-container">
         <h1>Payment successful!</h1>
         <div class="correct-container">
-            <img src="/img/correct.png" width="64" height="64">
+            <img src="img/correct.png" width="64" height="64">
         </div>
         <div class="success-text">
             <div class="success-child">

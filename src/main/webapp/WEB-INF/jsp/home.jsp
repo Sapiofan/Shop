@@ -25,11 +25,11 @@
     <script crossorigin src="https://unpkg.com/react@16.13.1/umd/react.development.js"></script>
     <script crossorigin src="https://unpkg.com/react-dom@16.13.1/umd/react-dom.development.js"></script>
     <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
-    <script type="text/babel" src="/js/components/Component.jsx"></script>
-    <script src="/js/home.js"></script>
+    <script type="text/babel" src="js/components/Component.jsx"></script>
+    <script src="js/home.js"></script>
 
-    <link rel="stylesheet" href="/css/home.css">
-    <link rel="stylesheet" href="/css/general.css">
+    <link rel="stylesheet" href="css/home.css">
+    <link rel="stylesheet" href="css/general.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="air-slider.min.css">
 
@@ -43,7 +43,7 @@
     <section>
         <div class="slideshow-container">
             <div class="mySlides fade">
-                <img src="/img/laptop.PNG">
+                <img src="img/laptop.PNG">
             </div>
             <div class="mySlides fade">
                 <img src="https://static.wixstatic.com/media/c837a6_f58829a26e594ca3aa72383e19cf39b9~mv2.png/v1/fill/w_1309,h_706,al_r,usm_0.66_1.00_0.01,enc_auto/c837a6_f58829a26e594ca3aa72383e19cf39b9~mv2.png">
@@ -163,8 +163,8 @@
     </section>
 </main>
 <jsp:include page="footer.jsp" />
-<script src="/js/general.js"></script>
-<script src="/js/home.js"></script>
+<script src="js/general.js"></script>
+<script src="js/home.js"></script>
 </body>
 </html>
 <script>
