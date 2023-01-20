@@ -19,9 +19,9 @@
     <link rel="icon"
           href="https://ru.seaicons.com/wp-content/uploads/2015/10/Flat-TV-icon.png">
 
-    <link rel="stylesheet" href="css/general.css">
-    <link rel="stylesheet" href="css/admin.css">
-    <link rel="stylesheet" href="css/home.css">
+    <link rel="stylesheet" href="<c:url value="/css/general.css" />">
+    <link rel="stylesheet" href="<c:url value="/css/admin.css" />">
+    <link rel="stylesheet" href="<c:url value="/css/home.css" />">
 </head>
 <body>
 <jsp:include page="admin-header.jsp"/>

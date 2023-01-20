@@ -7,7 +7,7 @@
         <c:if test="${isAuthenticated}">
             <form action="/" method="post">
                 <button type="submit" name="logout" class="user menu-item">
-                    <img src="img/user.png" style="width: 30px; height: 30px;">
+                    <img src="<c:url value="/img/user.png" />" style="width: 30px; height: 30px;">
                     <p>Logout</p>
                 </button>
             </form>
@@ -15,27 +15,27 @@
         <c:if test="${!isAuthenticated}">
                 <button onclick="document.getElementById('login').style.display='block'"
                         class="user menu-item">
-                    <img src="img/user.png" style="width: 30px; height: 30px;">
+                    <img src="<c:url value="/img/user.png" />" style="width: 30px; height: 30px;">
                     <p>Sign in</p>
                 </button>
         </c:if>
         <c:if test="${isAuthenticated}">
             <button id="header-heart" onclick="document.getElementById('likes').style.display='block'"
                     class="likes menu-item">
-                <img src="img/heart (2).png" style="width: 30px; height: 30px;">
+                <img src="<c:url value="/img/heart (2).png" />" style="width: 30px; height: 30px;">
                 <p>Favorites</p>
             </button>
         </c:if>
         <c:if test="${!isAuthenticated}">
             <button onclick="document.getElementById('login').style.display='block'"
                     class="likes menu-item">
-                <img src="/img/heart (2).png" style="width: 30px; height: 30px;">
+                <img src="<c:url value="/img/heart (2).png" />" style="width: 30px; height: 30px;">
                 <p>Favorites</p>
             </button>
         </c:if>
         <a href="/">
             <div class="menu-item">
-                <img src="img/home.svg" style="width: 30px; height: 30px;">
+                <img src="<c:url value="/img/home.svg" />" style="width: 30px; height: 30px;">
                 <p>Home</p>
             </div>
         </a>
@@ -43,7 +43,7 @@
             <div class="menu-item">
                 <div class="menu-container">
                     <div class="cat-container" id="cat-container" onclick="openList()">
-                        <img src="img/application.png" style="width: 30px; height: 30px;">
+                        <img src="<c:url value="/img/application.png" />" style="width: 30px; height: 30px;">
                         <p class="menu-coll">Categories</p>
                     </div>
                     <ul class="menu-category" id="menu-category">
@@ -60,19 +60,19 @@
         </div>
         <a href="/about">
             <div class="menu-item">
-                <img src="img/info.png" style="width: 30px; height: 30px;">
+                <img src="<c:url value="/img/info.png" />" style="width: 30px; height: 30px;">
                 <p>About</p>
             </div>
         </a>
         <a href="/help">
             <div class="menu-item">
-                <img src="img/communication.png" style="width: 30px; height: 30px;">
+                <img src="<c:url value="/img/communication.png" />" style="width: 30px; height: 30px;">
                 <p>Help</p>
             </div>
         </a>
     <a href="/contact">
         <div class="menu-item">
-            <img src="img/messenger.png" style="width: 30px; height: 30px;">
+            <img src="<c:url value="/img/messenger.png" />" style="width: 30px; height: 30px;">
             <p>Contact</p>
         </div>
     </a>

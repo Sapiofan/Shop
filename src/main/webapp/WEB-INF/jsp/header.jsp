@@ -37,7 +37,7 @@
                 <c:if test="${isAuthenticated}">
                     <form action="/" method="post">
                         <div class="dropdown-user">
-                            <button type="button" class="dropbtn-user user"><img src="img/user.png"
+                            <button type="button" class="dropbtn-user user"><img src="<c:url value="/img/user.png" />" />
                                                                    style="width: 36px; height: 36px;"></button>
                             <div class="dropdown-content-user">
                                 <a href="#">SmartShop money</a>
@@ -49,21 +49,21 @@
                 </c:if>
                 <c:if test="${!isAuthenticated}">
                     <button onclick="document.getElementById('login').style.display='block'"
-                            class="user"><img src="img/user.png" style="width: 36px; height: 36px;"></button>
+                            class="user"><img src="<c:url value="/img/user.png" />" style="width: 36px; height: 36px;"></button>
                 </c:if>
             </div>
             <div class="sign">
                 <c:if test="${isAuthenticated}">
                     <button id="header-heart" onclick="document.getElementById('likes').style.display='block'"
                             class="likes">
-                        <img src="img/heart (2).png" style="width: 36px; height: 36px;">
+                        <img src="<c:url value="/img/heart (2).png" />" style="width: 36px; height: 36px;">
                         <span id="header-heart-n" class="wishlist-count">${favoriteProducts.size()}</span>
                     </button>
                 </c:if>
                 <c:if test="${!isAuthenticated}">
                     <button onclick="document.getElementById('login').style.display='block'"
                             class="likes">
-                        <img src="img/heart (2).png" style="width: 36px; height: 36px;">
+                        <img src="<c:url value="/img/heart (2).png" />" style="width: 36px; height: 36px;">
                     </button>
                 </c:if>
             </div>

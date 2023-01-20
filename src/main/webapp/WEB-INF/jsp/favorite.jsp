@@ -64,13 +64,13 @@
                     counter = `<span id="header-heart-n" class="wishlist-count">`+ number +`</span>`;
                     if(action === 'addProduct'){
                         likeBut = `<button id="`+productId+`" type="button" class="empty-heart" onclick="productChanges('/deleteFavorite/`+productId+`')"><img
-                                                    src="img/red-heart.png"
+                                                    src="<c:url value="/img/red-heart.png" />"
                                                     style="width: 20px; height: 20px; margin-right: 10px;"></button>`;
                         $("#"+productId+"-signs").append(likeBut);
                     }
                     if(action === 'deleteFavorite'){
                         likeBut = `<button id="`+productId+`" type="button" class="empty-heart" onclick="productChanges('/addProduct/`+productId+`')"><img
-                                                    src="img/heart.png"
+                                                    src="<c:url value="/img/heart.png" />"
                                                     style="width: 20px; height: 20px; margin-right: 10px;"></button>`;
                         $("#"+productId+"-signs").append(likeBut);
                     }

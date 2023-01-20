@@ -28,8 +28,8 @@
     <script type="text/babel" src="js/components/Component.jsx"></script>
     <script src="js/home.js"></script>
 
-    <link rel="stylesheet" href="css/home.css">
-    <link rel="stylesheet" href="css/general.css">
+    <link rel="stylesheet" href="<c:url value="/css/home.css" />">
+    <link rel="stylesheet" href="<c:url value="/css/general.css" />">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="air-slider.min.css">
 
@@ -43,7 +43,7 @@
     <section>
         <div class="slideshow-container">
             <div class="mySlides fade">
-                <img src="img/laptop.PNG">
+                <img src="<c:url value="/img/laptop.PNG" />">
             </div>
             <div class="mySlides fade">
                 <img src="https://static.wixstatic.com/media/c837a6_f58829a26e594ca3aa72383e19cf39b9~mv2.png/v1/fill/w_1309,h_706,al_r,usm_0.66_1.00_0.01,enc_auto/c837a6_f58829a26e594ca3aa72383e19cf39b9~mv2.png">
@@ -137,25 +137,25 @@
         <div class="advantages-padding">
             <div class="advantage">
                 <div class="advantage-icon">
-                    <img src="img/logistics-delivery.png" style="width: 64px; height: 64px;">
+                    <img src="<c:url value="/img/logistics-delivery.png" />" style="width: 64px; height: 64px;">
                 </div>
                 <p class="advantage-text">Fast delivery anywhere in the country</p>
             </div>
             <div class="advantage">
                 <div class="advantage-icon">
-                    <img src="img/delivery.png" style="width: 64px; height: 64px;">
+                    <img src="<c:url value="/img/delivery.png" />" style="width: 64px; height: 64px;">
                 </div>
                 <p class="advantage-text">Free shipping on orders over $50</p>
             </div>
             <div class="advantage">
                 <div class="advantage-icon">
-                    <img src="img/discount.png" style="width: 64px; height: 64px;">
+                    <img src="<c:url value="/img/discount.png" />" style="width: 64px; height: 64px;">
                 </div>
                 <p class="advantage-text">Low prices guaranteed</p>
             </div>
             <div class="advantage">
                 <div class="advantage-icon">
-                    <img src="img/clock.png" style="width: 64px; height: 64px;">
+                    <img src="<c:url value="/img/clock.png" />" style="width: 64px; height: 64px;">
                 </div>
                 <p class="advantage-text">Available to you 24/7</p>
             </div>
@@ -163,8 +163,8 @@
     </section>
 </main>
 <jsp:include page="footer.jsp" />
-<script src="js/general.js"></script>
-<script src="js/home.js"></script>
+<script src="<c:url value="/js/general.js" />"></script>
+<script src="<c:url value="/js/home.js" />"></script>
 </body>
 </html>
 <script>

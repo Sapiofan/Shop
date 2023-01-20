@@ -22,8 +22,8 @@
     />
     <link rel="icon"
           href="https://ru.seaicons.com/wp-content/uploads/2015/10/Flat-TV-icon.png">
-    <link rel="stylesheet" href="css/filters.css">
-    <link rel="stylesheet" href="css/general.css">
+    <link rel="stylesheet" href="<c:url value="/css/filters.css" />">
+    <link rel="stylesheet" href="<c:url value="/css/general.css" />">
     <link rel="stylesheet" src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"/>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
@@ -160,7 +160,7 @@
                     <div class="filters-icon">
                         <button type="button" onclick="document.getElementById('filters').style.display='block';
                             document.body.style.overflowY = 'hidden';">
-                            <img src="img/filter-_2_.svg">
+                            <img src="<c:url value="/img/filter-_2_.svg" />">
                         </button>
                     </div>
                 </div>
@@ -181,7 +181,7 @@
                                 <div id="${product.id}-signs" class="card-signs">
                                     <div class="Stars" style="--rating: ${product.rating};"></div>
                                     <a href="/product/${product.id}#reviews">
-                                        <img src="img/chat-bubble.png"
+                                        <img src="<c:url value="/img/chat-bubble.png" />"
                                              style="width: 20px; height: 20px; margin-right: 10px;">
                                     </a>
                                     <c:if test="${isAuthenticated}">
@@ -193,19 +193,19 @@
                                         </c:forEach>
                                         <c:if test="${!contains}">
                                             <button id="${product.id}" type="button" class="empty-heart" onclick="productChanges('/addProduct/${product.id}')"><img
-                                                    src="img/heart.png"
+                                                    src="<c:url value="/img/heart.png" />"
                                                     style="width: 20px; height: 20px; margin-right: 10px;"></button>
                                         </c:if>
                                         <c:if test="${contains}">
                                             <button id="${product.id}" type="button" class="empty-heart" onclick="productChanges('/deleteFavorite/${product.id}')"><img
-                                                    src="img/red-heart.png"
+                                                    src="<c:url value="/img/red-heart.png" />"
                                                     style="width: 20px; height: 20px; margin-right: 10px;"></button>
                                         </c:if>
                                     </c:if>
                                     <c:if test="${!isAuthenticated}">
                                         <button type="button" class="empty-heart"
                                                 onclick="document.getElementById('login').style.display='block';">
-                                            <img src="img/heart.png"
+                                            <img src="<c:url value="/img/heart.png" />"
                                                  style="width: 20px; height: 20px; margin-right: 10px;">
                                         </button>
                                     </c:if>
@@ -243,8 +243,8 @@
     </form>
 </main>
 <jsp:include page="footer.jsp"/>
-<script src="js/general.js"></script>
-<script src="js/filters.js"></script>
+<script src="<c:url value="/js/general.js" />"></script>
+<script src="<c:url value="/js/filters.js" />"></script>
 </body>
 
 <script>

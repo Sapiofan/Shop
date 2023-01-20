@@ -22,8 +22,8 @@
     />
     <link rel="icon"
           href="https://ru.seaicons.com/wp-content/uploads/2015/10/Flat-TV-icon.png">
-    <link rel="stylesheet" href="/css/general.css">
-    <link rel="stylesheet" href="/css/description.css">
+    <link rel="stylesheet" href="<c:url value="/css/general.css" />">
+    <link rel="stylesheet" href="<c:url value="/css/description.css" />">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 </head>
@@ -49,7 +49,7 @@
                     <div class="Stars" style="--rating: ${product.rating};"></div>
                     <p class="rating">${product.rating}</p>
                     <a href="#reviews" class="reviews-link">
-                        <img src="/img/chat-bubble.png" width="16px" height="16px">
+                        <img src="<c:url value="/img/chat-bubble.png" />" width="16px" height="16px">
                         <p>${reviews.size()} review(s)</p>
                     </a>
                 </div>
@@ -71,7 +71,7 @@
                 </sec:authorize>
                 <div class="header-like">
                     <button type="button" class="empty-heart" onclick="productChanges('/addProduct/${product.id}')">
-                        <img src="/img/heart (2).png">
+                        <img src="<c:url value="/img/heart (2).png" />">
                     </button>
                 </div>
             </div>
@@ -159,7 +159,7 @@
                 </sec:authorize>
                 <div class="like-container">
                     <button type="button" class="empty-heart" onclick="productChanges('/addProduct/${product.id}')">
-                        <img src="/img/heart.png" style="width: 32px; height: 32px;">
+                        <img src="<c:url value="/img/heart.png" />" style="width: 32px; height: 32px;">
                     </button>
                 </div>
             </div>
@@ -168,14 +168,14 @@
                     <h6>Discounts and Stocks</h6>
                     <c:if test="${product.discount != 0}">
                         <div class="discount-type">
-                            <img src="/img/badge.png" width="30px" height="30px">
+                            <img src="<c:url value="/img/badge.png" />" width="30px" height="30px">
                             <p><span class="bold-text">Discount</span> Benefit up
                                 to ${product.price-discount} UAH</p>
                         </div>
                     </c:if>
                     <c:if test="${product.gifts != 'none'}">
                         <div class="discount-type">
-                            <img src="/img/shipping.png" width="30px" height="30px">
+                            <img src="<c:url value="/img/shipping.png" />" width="30px" height="30px">
                             <p><span class="bold-text">Gifts</span> ${product.gifts}</p>
                         </div>
                     </c:if>
@@ -266,7 +266,7 @@
                         <p class="date">${review.date}</p>
                         <c:if test="${review.recommended}">
                             <div class="recommend">
-                                <img src="/img/check.png" width="16px" height="16px">
+                                <img src="<c:url value="/img/check.png" />" width="16px" height="16px">
                                 <p>Recommended</p>
                             </div>
                         </c:if>
@@ -312,8 +312,8 @@
     </section>
 </main>
 <jsp:include page="footer.jsp"/>
-<script src="/js/description.js"></script>
-<script src="/js/general.js"></script>
+<script src="<c:url value="/js/description.js" />"></script>
+<script src="<c:url value="/js/general.js" />"></script>
 <script>
     window.onload = ev => {
         if (${reviewExists}) {

@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -22,7 +23,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"/>
 
-    <link rel="stylesheet" href="css/general.css">
+    <link rel="stylesheet" href="<c:url value="/css/general.css" />">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 </head>
 <body id="body">
@@ -91,7 +92,7 @@
     </section>
 </main>
 <jsp:include page="footer.jsp"/>
-<script src="js/general.js"></script>
+<script src="<c:url value="/js/general.js" />"></script>
 </body>
 <script type="text/javascript">
     window.onload = function () {
