@@ -37,7 +37,7 @@
                 <c:if test="${isAuthenticated}">
                     <form action="/" method="post">
                         <div class="dropdown-user">
-                            <button type="button" class="dropbtn-user user"><img src="<c:url value="/img/user.png" />" />
+                            <button type="button" class="dropbtn-user user"><img src="<c:url value="/img/user.png" />"
                                                                    style="width: 36px; height: 36px;"></button>
                             <div class="dropdown-content-user">
                                 <a href="#">SmartShop money</a>
