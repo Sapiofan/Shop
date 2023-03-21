@@ -89,4 +89,12 @@ public class CartProduct {
     public int hashCode() {
         return Objects.hash(id, cart, product, quantity, total);
     }
+
+    @Override
+    public String toString() {
+        return "CartProduct{" +
+                "id=" + id +
+                ", cart=" + cart +
+                '}';
+    }
 }

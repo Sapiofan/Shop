@@ -103,4 +103,18 @@ public class Career {
     public void setSent(Date sent) {
         this.sent = sent;
     }
+
+    @Override
+    public String toString() {
+        return "Career{" +
+                "id=" + id +
+                ", first_name='" + first_name + '\'' +
+                ", last_name='" + last_name + '\'' +
+                ", email='" + email + '\'' +
+                ", phone='" + phone + '\'' +
+                ", position='" + position + '\'' +
+                ", link='" + link + '\'' +
+                ", sent=" + sent +
+                '}';
+    }
 }

@@ -72,4 +72,14 @@ public class Cart {
     public void setCartProducts(Set<CartProduct> cartProducts) {
         this.cartProducts = cartProducts;
     }
+
+    @Override
+    public String toString() {
+        return "Cart{" +
+                "id=" + id +
+                ", quantity=" + quantity +
+                ", totalPrice=" + totalPrice +
+                ", user=" + user +
+                '}';
+    }
 }

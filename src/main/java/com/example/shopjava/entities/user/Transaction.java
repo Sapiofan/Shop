@@ -98,4 +98,12 @@ public class Transaction {
     public void setName(String name) {
         this.name = name;
     }
+
+    @Override
+    public String toString() {
+        return "Transaction{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                '}';
+    }
 }

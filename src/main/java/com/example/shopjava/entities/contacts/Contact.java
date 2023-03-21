@@ -101,4 +101,12 @@ public class Contact {
     public int hashCode() {
         return Objects.hash(id, first_name, last_name, email, sendMails);
     }
+
+    @Override
+    public String toString() {
+        return "Contact{" +
+                "id=" + id +
+                ", email='" + email + '\'' +
+                '}';
+    }
 }
