@@ -48,7 +48,7 @@
                     </form>
                 </c:if>
                 <c:if test="${!isAuthenticated}">
-                    <button onclick="document.getElementById('login').style.display='block'"
+                    <button onclick="document.getElementById('login').style.display='block'" id="login-button"
                             class="user"><img src="<c:url value="/img/user.png" />" style="width: 36px; height: 36px;"></button>
                 </c:if>
             </div>

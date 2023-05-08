@@ -6,10 +6,10 @@
             <button class="up-button" onclick="document.getElementById('registration').style.display='block';
                 document.getElementById('login').style.display='none'">Sign Up
             </button>
-            <input class="email" type="email" placeholder="Enter Email" name="email" required>
-            <input class="password" type="password" placeholder="Enter Password" name="psw" required>
+            <input class="email" type="email" placeholder="Enter Email" name="email" id="profileEmail" required>
+            <input class="password" type="password" placeholder="Enter Password" name="psw" id="profilePassword" required>
             <div class="clearfix">
-                <button type="submit" class="signupbtn" name="login">Sign In</button>
+                <button type="submit" class="signupbtn" name="login" id="submitLogin">Sign In</button>
             </div>
         </div>
     </form>
