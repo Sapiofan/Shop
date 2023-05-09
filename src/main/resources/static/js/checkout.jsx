@@ -262,7 +262,7 @@ class Checkout extends React.Component {
                             placeholder="xxx"></input>
                     </div>
                     <input onClick={this.handleCard} className="back" value={"Back"}/>
-                    <input onClick={this.handleData} type="submit"
+                    <input onClick={this.handleData} type="submit" id="submitBut"
                            disabled={!this.state.part1 || !this.state.part2 || !this.state.part3
                                || !this.state.part4 || !this.state.prefix || !this.state.suffix || !this.state.cvv}
                            className="submit" value="Pay"/>
@@ -339,7 +339,7 @@ class Checkout extends React.Component {
                             placeholder="Input city"></input>
                     </div>
                     <input type="submit"
-                           className="submit" value="Next"
+                           className="submit" value="Next" id="nextBut"
                            disabled={!this.state.city || !this.state.name || !this.state.email ||
                                !this.state.phone1 || !this.state.phone2 || !this.state.phone3}/>
                 </form>
