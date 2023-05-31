@@ -1,0 +1,201 @@
+
+/*///////////////////////////////////////////
+//////////////// contact ////////////////////
+////////////////////////////////////////////*/
+
+#contact {
+    padding: 80px 200px 0 200px;
+}
+
+#contact h1 {
+    font-size: 38px;
+    text-align: center;
+    margin-bottom: 100px;
+}
+
+.parts {
+    display: flex;
+}
+
+.part1, .part2 {
+    display: block;
+}
+
+.part2 {
+    margin-left: 35%;
+}
+
+.work-time, .location {
+    width: 200px;
+    margin-bottom: 150px;
+}
+
+#contact h4 {
+    font-size: 18px;
+    margin-bottom: 20px;
+}
+
+#contact p {
+    font-size: 16px;
+    margin-bottom: 10px;
+    width: 90%;
+}
+
+.input-blocks {
+    display: flex;
+}
+
+.about-input-block {
+    display: block;
+    width: 50%;
+    margin-bottom: 20px;
+}
+
+.about-input-block p {
+    margin: 20px 0;
+    font-size: 18px;
+}
+
+.mar {
+    margin-right: 50px;
+}
+
+.input {
+    border: none;
+    border-bottom: 2px solid rgb(146, 146, 146);
+    background: transparent;
+    outline: none;
+    width: 100%;
+    font-size: 18px;
+}
+
+.input:focus {
+    border-bottom: 3px solid black;
+}
+
+.area {
+    margin-top: 20px;
+}
+
+.textarea {
+    width: 100%;
+    resize: none;
+}
+
+.submit {
+    background-color: blueviolet;
+    color: white;
+    transition: 1s;
+    width: 250px;
+    height: 40px;
+    border: none;
+    border-radius: 20px;
+    margin-left: 23%;
+    margin-top: 40px;
+    font-size: 18px;
+}
+
+.submit:hover {
+    cursor: pointer;
+    background-color: purple;
+}
+
+@media screen and (max-width: 600px) {
+    #contact {
+        padding: 20px 0;
+    }
+    .form-text p {
+        width: 100%;
+        margin: 15px 20px;
+    }
+    .parts {
+        display: block;
+    }
+    .part1 {
+        display: flex;
+        margin-bottom: 0px;
+        margin: 0 20px;
+    }
+    .part2 {
+        margin-left: 0;
+        text-align: center;
+    }
+    .about-input-block, .area {
+        text-align: left;
+    }
+    .part2 form {
+        margin: 20px;
+    }
+    .submit {
+        margin-left: 0;
+    }
+}
+
+/*///////////////////////////////////////////
+//////////////// letters ////////////////////
+////////////////////////////////////////////*/
+
+#letters {
+    margin: 100px 40px;
+    padding: 40px 200px 60px 200px;
+    background-color: blueviolet;
+    color: white;
+    text-align: center;
+}
+
+#letters h1 {
+    font-size: 30px;
+}
+
+#letters p {
+    margin: 30px 0;
+}
+
+#letters form {
+    display: flex;
+    margin-left: 23%;
+}
+
+.email-news{
+    width: 400px;
+    height: 34px;
+    border: none;
+    outline: none;
+    border-radius: 20px;
+    padding-left: 20px;
+    padding: 3px 0 3px 20px;
+    font-size: 16px;
+}
+
+.email-submit {
+    width: 200px;
+    height: 40px;
+    color: white;
+    background-color: black;
+    border: none;
+    border-radius: 25px;
+    margin-left: -50px;
+}
+
+.email-submit:hover {
+  cursor: pointer;
+}
+
+@media screen and (max-width: 600px) {
+    #letters {
+        margin: 40px 0;
+        padding: 20px 10px;
+    }
+    #letters form {
+        margin-left: 17%;
+    }
+    .email-news {
+        width: 200px;
+        height: 30px;
+    }
+    .email-submit {
+        height: 36px;
+        width: 100px;
+        margin-left: -20;
+    }
+}

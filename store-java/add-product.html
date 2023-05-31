@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Smart shop | Technics</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1"/>
+
+        <meta
+                name="description"
+                content="A project to train with Spring and React frameworks"
+        />
+
+        <meta property="og:title" content="Robot Genius"/>
+        <meta property="og:type" content="website"/>
+        <meta
+                property="og:description"
+                content="A joint project to create qualitative site."
+        />
+        <link rel="icon"
+            href="https://ru.seaicons.com/wp-content/uploads/2015/10/Flat-TV-icon.png">
+
+        <link rel="stylesheet" href="./general.css">
+        <link rel="stylesheet" href="./admin.css">
+        <link rel="stylesheet" href="./add-product.css">
+    </head>
+    <body>
+        <header>
+            <nav class="nav" id="nav">
+                <a href="home.html" id="logo"><p class="logo">SmartShop</p></a>
+                <button class="mobile-icon" id="mobile-icon">
+                    <a href="javascript:void(0);" class="icon">&#9776;</a>
+                </button>
+                <div class="navigation" id="navigation">
+                    <a data-langkey="Nav-Our-Work" href="#home">Change home</a>
+                    <a data-langkey="Nav-The-Team" href="#about">Products</a>
+                    <a data-langkey="Nav-The-Process" href="#car">Career</a>
+                    <a data-langkey="Nav-The-Process" href="#help">Feedback</a>
+                    <a data-langkey="Nav-Contact" href="#rev">Reviews</a>
+                    <a data-langkey="Nav-Contact" href="#faq">FAQ</a>
+                </div>
+            </nav>
+        </header>
+        <main class="main">
+            <!-- <form action="#" method="post">
+                <div class="big-group">
+                    <div class="input-group">
+                        <p>Ram</p>
+                        <input type="text" required>
+                    </div>
+                    <div class="input-group">
+                        <p>Color</p>
+                        <input type="text" required>
+                    </div>
+                    <div class="input-group">
+                        <p>Cores</p>
+                        <input type="text" required>
+                    </div>
+                    <div class="input-group">
+                        <p>Device type</p>
+                        <input type="text" required>
+                    </div>
+                </div>
+                <div class="big-group">
+                    <div class="input-group">
+                        <p>Ram</p>
+                        <input type="text" required>
+                    </div>
+                    <div class="input-group">
+                        <p>Color</p>
+                        <input type="text" required>
+                    </div>
+                    <div class="input-group">
+                        <p>Cores</p>
+                        <input type="text" required>
+                    </div>
+                    <div class="input-group">
+                        <p>Device type</p>
+                        <input type="text" required>
+                    </div>
+                </div>
+                <div class="big-group">
+                    <div class="input-group">
+                        <p>Ram</p>
+                        <input type="text" required>
+                    </div>
+                    <div class="input-group">
+                        <p>Color</p>
+                        <input type="text" required>
+                    </div>
+                    <div class="check-group">
+                        <label class="container1">
+                            <input type="checkbox">
+                            <span class="checkmark"></span>
+                            Is available?
+                        </label>
+                    </div>
+                    <div class="input-group">
+                        <p>Device type</p>
+                        <input type="text" required>
+                    </div>
+                </div>
+                <button onclick="history.back()" class="history-back">Back</button>
+                <button type="submit" class="add-product-button">Save</button>
+            </form> -->
+            <form action="#" method="post">
+                <div class="big-group">
+                    <div class="input-group">
+                        <p>Name</p>
+                        <input type="text" required>
+                    </div>
+                    <div class="input-group">
+                        <p>Category</p>
+                        <select class="categories" id="categories">
+                            <option value="in-store-sales" selected>Phones</option>
+                            <option value="store-leadership">Laptops</option>
+                            <option value="in-store-operations">Watches</option>
+                        </select>
+                    </div>
+                    <div class="input-group">
+                        <p>Brand</p>
+                        <input type="text" required>
+                    </div>
+                </div>
+                <div class="big-group">
+                    <div class="input-group">
+                        <p>Price</p>
+                        <input type="text" required>
+                    </div>
+                    <div class="input-group">
+                        <p>Payment</p>
+                        <input type="text" required>
+                    </div>
+                    <div class="input-group">
+                        <p>Warranty</p>
+                        <input type="number" required>
+                    </div>
+                </div>
+                <div class="big-group">
+                    <div class="input-group">
+                        <label class="container1">
+                            <input type="checkbox">
+                            <span class="checkmark"></span>
+                            Is available?
+                        </label>
+                    </div>
+                </div>
+                <div class="big-group">
+                    <div class="input-group">
+                        <p>Gifts</p>
+                        <input type="text">
+                    </div>
+                    <div class="input-group">
+                        <p>Discounts (%)</p>
+                        <input type="number">
+                    </div>
+                </div>
+                <button onclick="history.back()" class="history-back">Back</button>
+                <button type="submit" class="add-product-button">Continue</button>
+            </form>
+        </main>
+    </body>
+</html>

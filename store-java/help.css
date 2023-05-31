@@ -1,0 +1,118 @@
+
+.main {
+  text-align: center;
+}
+
+/*///////////////////////////////////////////
+//////////////// Shipping & Returns /////////
+////////////////////////////////////////////*/
+
+#shipping, #terms {
+  /* margin: 100px 0 150px 0; */
+  margin: 7% 0 15% 0;
+  padding: 0 350px;
+}
+
+section h1{
+  font-size: 44px;
+  margin-bottom: 150px;
+}
+
+.text-block {
+  margin-bottom: 100px;
+}
+
+.text-block h3 {
+  margin-bottom: 50px;
+  font-size: 30px;
+}
+
+.text-block p {
+  padding: 0 50px;
+}
+
+@media screen and (max-width: 600px) {
+  #shipping, #terms {
+    padding: 0;
+    width: inherit;
+  }
+  section h1 {
+    font-size: 30px;
+    margin-bottom: 40px;
+    width: inherit;
+  }
+  .text-block {
+    margin-bottom: 40px;
+  }
+  .text-block h3 {
+    font-size: 22px;
+  }
+  .text-block p{
+    width: inherit;
+    padding: 0 20px;
+  }
+}
+
+/*///////////////////////////////////////////
+//////////////// FAQ ////////////////////////
+////////////////////////////////////////////*/
+
+#faq {
+  margin-bottom: 100px;
+  background-color: rgb(235, 235, 235);
+}
+
+#faq h1{
+  margin: 0;
+  margin-bottom: 50px;
+  font-size: 32px;
+}
+
+.questions {
+  padding: 0 300px;
+  text-align: left;
+}
+
+.question {
+  margin-bottom: 20px;
+}
+
+.collapsible1 {
+  background-color: rgb(235, 235, 235);
+  color: black;
+  cursor: pointer;
+  width: 100%;
+  height: 20px;
+  border: none;
+  text-align: left;
+  outline: none;
+  font-size: 18px;
+  margin-bottom: 20px;
+  background: url('https://icons-for-free.com/iconfiles/png/512/arrows+bottom+chevron+direction+down+icon-1320085938044424744.png') no-repeat right;
+  background-size: 16px;
+}
+
+.active-faq1 {
+  background: url('https://cdn3.iconfinder.com/data/icons/minimal-website-ui-kit/100/ld_chevron_up-512.png') no-repeat right;
+  background-size: 16px;
+}
+
+.content1 {
+  padding: 0 20px;
+  display: none;
+  overflow: hidden;
+  background-color: rgb(235, 235, 235);
+  margin-bottom: 20px;
+}
+
+@media screen and (max-width: 600px) {
+  #faq h1 {
+    font-size: 30px;
+  }
+  .questions {
+    padding: 0;
+  }
+  .collapsible1 {
+    padding: 0 30% 0 20px;
+  }
+}
